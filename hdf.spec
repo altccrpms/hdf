@@ -1,6 +1,6 @@
 Name: hdf
 Version: 4.2r1
-Release: 2%{?dist}
+Release: 3%{?dist}
 Summary: A general purpose library and file format for storing scientific data
 License: BSD-ish
 Group: System Environment/Libraries
@@ -11,6 +11,7 @@ Patch0: hdf-4.2r1-configure.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires: autoconf flex byacc libjpeg-devel zlib-devel
 BuildRequires: gcc-gfortran
+ExcludeArch: ppc ppc64
 
 %description
 HDF is a general purpose library and file format for storing scientific data.
@@ -70,6 +71,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/%{name}/
 
 %changelog
+* Fri Jul 29 2005 Orion Poplawski <orion@cora.nwra.com> 4.2r1-3
+- Exclude ppc/ppc64 - HDF does not recognize it
+
 * Wed Jul 20 2005 Orion Poplawski <orion@cora.nwra.com> 4.2r1-2
 - Fix BuildRequires to have autoconf
 
