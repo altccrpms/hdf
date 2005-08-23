@@ -1,10 +1,10 @@
 Name: hdf
 Version: 4.2r1
-Release: 3%{?dist}
+Release: 4%{?dist}
 Summary: A general purpose library and file format for storing scientific data
 License: BSD-ish
 Group: System Environment/Libraries
-URL: http://hdf.ncsa.uiuc.edu/HDF/
+URL: http://hdf.ncsa.uiuc.edu/hdf4.html
 Source0: ftp://ftp.ncsa.uiuc.edu/HDF/HDF/HDF_Current/src/HDF%{version}.tar.gz
 Source1: ftp://ftp.ncsa.uiuc.edu/HDF/HDF/HDF_Current/src/patches/4.2r1-hrepack-patch.tar
 Patch0: hdf-4.2r1-configure.patch
@@ -39,6 +39,7 @@ rm -r mfhdf/hrepack/4.2r1-hrepack-patch
 
 %build
 autoconf
+export CFLAGS="$RPM_OPT_FLAGS -fPIC"
 %configure F77=gfortran FFLAGS=-ffixed-line-length-none
 make
 
@@ -71,6 +72,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/%{name}/
 
 %changelog
+* Tue Aug 23 2005 Orion Poplawski <orion@cora.nwra.com> 4.2r1-4
+- Use -fPIC
+- Fix project URL
+
 * Fri Jul 29 2005 Orion Poplawski <orion@cora.nwra.com> 4.2r1-3
 - Exclude ppc/ppc64 - HDF does not recognize it
 
