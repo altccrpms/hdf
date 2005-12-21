@@ -1,6 +1,6 @@
 Name: hdf
 Version: 4.2r1
-Release: 5%{?dist}
+Release: 6%{?dist}
 Summary: A general purpose library and file format for storing scientific data
 License: BSD-ish
 Group: System Environment/Libraries
@@ -73,6 +73,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/%{name}/
 
 %changelog
+* Wed Dec 21 2005 Orion Poplawski <orion@cora.nwra.com> 4.2r1-6
+- Rebuild
+
 * Wed Oct 05 2005 Orion Poplawski <orion@cora.nwra.com> 4.2r1-5
 - Add Requires: libjpeg-devel zlib-devel to -devel package
 
