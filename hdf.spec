@@ -1,6 +1,6 @@
 Name: hdf
 Version: 4.2r1
-Release: 6%{?dist}
+Release: 7%{?dist}
 Summary: A general purpose library and file format for storing scientific data
 License: BSD-ish
 Group: System Environment/Libraries
@@ -8,10 +8,10 @@ URL: http://hdf.ncsa.uiuc.edu/hdf4.html
 Source0: ftp://ftp.ncsa.uiuc.edu/HDF/HDF/HDF_Current/src/HDF%{version}.tar.gz
 Source1: ftp://ftp.ncsa.uiuc.edu/HDF/HDF/HDF_Current/src/patches/4.2r1-hrepack-patch.tar
 Patch0: hdf-4.2r1-configure.patch
+Patch1: hdf-4.2r1-ppc.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires: autoconf flex byacc libjpeg-devel zlib-devel
 BuildRequires: gcc-gfortran
-ExcludeArch: ppc ppc64
 
 %description
 HDF is a general purpose library and file format for storing scientific data.
@@ -37,6 +37,7 @@ tar xf %{SOURCE1} --directory mfhdf/hrepack
 mv mfhdf/hrepack/4.2r1-hrepack-patch/*.[ch] mfhdf/hrepack
 rm -r mfhdf/hrepack/4.2r1-hrepack-patch
 %patch0 -p1 -b .orig
+%patch1 -p1 -b .orig
 
 %build
 autoconf
@@ -73,6 +74,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/%{name}/
 
 %changelog
+* Thu Feb  2 2006 Orion Poplawski <orion@cora.nwra.com> 4.2r1-7
+- Add patch to build on ppc
+
 * Wed Dec 21 2005 Orion Poplawski <orion@cora.nwra.com> 4.2r1-6
 - Rebuild
 
