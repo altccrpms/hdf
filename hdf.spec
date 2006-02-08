@@ -1,6 +1,6 @@
 Name: hdf
 Version: 4.2r1
-Release: 7%{?dist}
+Release: 8%{?dist}
 Summary: A general purpose library and file format for storing scientific data
 License: BSD-ish
 Group: System Environment/Libraries
@@ -41,7 +41,7 @@ rm -r mfhdf/hrepack/4.2r1-hrepack-patch
 
 %build
 autoconf
-export CFLAGS="$RPM_OPT_FLAGS -fPIC"
+export CFLAGS="$RPM_OPT_FLAGS -fPIC -DHAVE_NETCDF"
 %configure F77=gfortran FFLAGS=-ffixed-line-length-none
 make
 
@@ -74,6 +74,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/%{name}/
 
 %changelog
+* Wed Feb  8 2006 Orion Poplawski <orion@cora.nwra.com> 4.2r1-8
+- Compile with -DHAVE_NETCDF for gdl hdf/netcdf compatibility
+
 * Thu Feb  2 2006 Orion Poplawski <orion@cora.nwra.com> 4.2r1-7
 - Add patch to build on ppc
 
