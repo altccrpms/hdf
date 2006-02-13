@@ -1,6 +1,6 @@
 Name: hdf
 Version: 4.2r1
-Release: 8%{?dist}
+Release: 9%{?dist}
 Summary: A general purpose library and file format for storing scientific data
 License: BSD-ish
 Group: System Environment/Libraries
@@ -74,6 +74,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/%{name}/
 
 %changelog
+* Mon Feb 13 2006 Orion Poplawski <orion@cora.nwra.com> 4.2r1-9
+- Rebuild for gcc/glibc changes
+
 * Wed Feb  8 2006 Orion Poplawski <orion@cora.nwra.com> 4.2r1-8
 - Compile with -DHAVE_NETCDF for gdl hdf/netcdf compatibility
 
