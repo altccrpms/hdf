@@ -58,9 +58,6 @@ make check
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post
-
-%postun
 
 %files
 %defattr(-,root,root,0755)
