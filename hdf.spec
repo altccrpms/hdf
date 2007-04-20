@@ -7,6 +7,7 @@ Group: System Environment/Libraries
 URL: http://hdf.ncsa.uiuc.edu/hdf4.html
 #Source0: ftp://ftp.ncsa.uiuc.edu/HDF/HDF/HDF_Current/src/HDF%{version}.tar.gz
 Source0: ftp://ftp.hdfgroup.org/HDF/HDF_Current/src/4.2r1-hrepack-p4.tar.gz
+Patch0: hdf-4.2r1p4-maxavailfiles.patch
 Patch1: hdf-4.2r1-ppc.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires: autoconf flex byacc libjpeg-devel zlib-devel
@@ -36,13 +37,14 @@ HDF development headers and libraries.
 %prep
 #%setup -q -n HDF%{version}
 %setup -q -n 4.2r1-hrepack-p4
+%patch -p1 -b .maxavailfiles
 %patch1 -p1 -b .orig
 
 
 %build
 autoconf
 export CFLAGS="$RPM_OPT_FLAGS -fPIC -DHAVE_NETCDF"
-%configure F77=gfortran FFLAGS=-ffixed-line-length-none
+%configure F77=gfortran FFLAGS=-ffixed-line-length-none --disable-production
 make
 
 
@@ -78,6 +80,8 @@ rm -rf $RPM_BUILD_ROOT
 * Fri Apr 20 2007 Orion Poplawski <orion@cora.nwra.com> 4.2r1-12
 - Use 4.2r1-hrepack-p4.tar.gz for hrepack patch
 - Remove configure patch applied upstream
+- Use --disable-production configure flag to avoid stripping -g compile flag
+- Add patch to fix open file test when run under mock
 
 * Tue Aug 29 2006 Orion Poplawski <orion@cora.nwra.com> 4.2r1-11
 - Rebuild for FC6
