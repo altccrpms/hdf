@@ -1,6 +1,6 @@
 Name: hdf
 Version: 4.2r1
-Release: 12%{?dist}
+Release: 13%{?dist}
 Summary: A general purpose library and file format for storing scientific data
 License: BSD-ish
 Group: System Environment/Libraries
@@ -28,7 +28,7 @@ grids. You can also mix and match them in HDF files according to your needs.
 Summary: HDF development files
 Group: Development/Libraries
 Requires: %{name} = %{version}-%{release}
-Requires: libjpeg-devel zlib-devel netcdf-devel
+Requires: libjpeg-devel zlib-devel
 
 %description devel
 HDF development headers and libraries.
@@ -77,6 +77,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Thu May 10 2007 Orion Poplawski <orion@cora.nwra.com> 4.2r1-13
+- Remove netcdf-devel requires. (bug #239631)
+
 * Fri Apr 20 2007 Orion Poplawski <orion@cora.nwra.com> 4.2r1-12
 - Use 4.2r1-hrepack-p4.tar.gz for hrepack patch
 - Remove configure patch applied upstream
