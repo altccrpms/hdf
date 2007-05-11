@@ -1,6 +1,6 @@
 Name: hdf
 Version: 4.2r1
-Release: 13%{?dist}
+Release: 14%{?dist}
 Summary: A general purpose library and file format for storing scientific data
 License: BSD-ish
 Group: System Environment/Libraries
@@ -38,7 +38,7 @@ HDF development headers and libraries.
 #%setup -q -n HDF%{version}
 %setup -q -n 4.2r1-hrepack-p4
 %patch -p1 -b .maxavailfiles
-%patch1 -p1 -b .orig
+%patch1 -p1 -b .ppc
 
 
 %build
@@ -77,6 +77,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Thu May 10 2007 Balint Cristian <cbalint@redhat.com> 4.2r1-14
+- Fix ppc64 too.
+
 * Thu May 10 2007 Orion Poplawski <orion@cora.nwra.com> 4.2r1-13
 - Remove netcdf-devel requires. (bug #239631)
 
