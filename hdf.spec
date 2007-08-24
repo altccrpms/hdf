@@ -1,8 +1,8 @@
 Name: hdf
 Version: 4.2r1
-Release: 14%{?dist}
+Release: 15%{?dist}
 Summary: A general purpose library and file format for storing scientific data
-License: BSD-ish
+License: BSD
 Group: System Environment/Libraries
 URL: http://hdf.ncsa.uiuc.edu/hdf4.html
 #Source0: ftp://ftp.ncsa.uiuc.edu/HDF/HDF/HDF_Current/src/HDF%{version}.tar.gz
@@ -77,6 +77,10 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Fri Aug 24 2007 Orion Poplawski <orion@cora.nwra.com> 4.2r1-15
+- Update license tag to BSD
+- Rebuild for BuildID
+
 * Thu May 10 2007 Balint Cristian <cbalint@redhat.com> 4.2r1-14
 - Fix ppc64 too.
 
