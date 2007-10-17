@@ -1,16 +1,15 @@
 Name: hdf
-Version: 4.2r1
-Release: 15%{?dist}
+Version: 4.2r2
+Release: 1%{?dist}
 Summary: A general purpose library and file format for storing scientific data
 License: BSD
 Group: System Environment/Libraries
 URL: http://hdf.ncsa.uiuc.edu/hdf4.html
-#Source0: ftp://ftp.ncsa.uiuc.edu/HDF/HDF/HDF_Current/src/HDF%{version}.tar.gz
-Source0: ftp://ftp.hdfgroup.org/HDF/HDF_Current/src/4.2r1-hrepack-p4.tar.gz
+Source0: ftp://ftp.hdfgroup.org/HDF/HDF_Current/src/HDF%{version}.tar.gz
 Patch0: hdf-4.2r1p4-maxavailfiles.patch
-Patch1: hdf-4.2r1-ppc.patch
+Patch1: hdf-4.2r2-ppc.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
-BuildRequires: autoconf flex byacc libjpeg-devel zlib-devel
+BuildRequires: flex byacc libjpeg-devel zlib-devel
 BuildRequires: gcc-gfortran
 
 
@@ -35,23 +34,25 @@ HDF development headers and libraries.
 
 
 %prep
-#%setup -q -n HDF%{version}
-%setup -q -n 4.2r1-hrepack-p4
+%setup -q -n HDF%{version}
 %patch -p1 -b .maxavailfiles
 %patch1 -p1 -b .ppc
 
+chmod a-x *hdf/*/*.c hdf/*/*.h
+
 
 %build
-autoconf
-export CFLAGS="$RPM_OPT_FLAGS -fPIC -DHAVE_NETCDF"
-%configure F77=gfortran FFLAGS=-ffixed-line-length-none --disable-production
+rm config/*linux-gnu
+export CFLAGS="$RPM_OPT_FLAGS -fPIC"
+export FFLAGS="$RPM_OPT_FLAGS -ffixed-line-length-none"
+%configure F77=gfortran --disable-production \
+ --includedir=%{_includedir}/%{name} --libdir=%{_libdir}/%{name}
 make
 
 
 %install
 rm -rf $RPM_BUILD_ROOT
-%makeinstall includedir=${RPM_BUILD_ROOT}%{_includedir}/%{name} \
-             libdir=$RPM_BUILD_ROOT%{_libdir}/%{name}
+make install DESTDIR=$RPM_BUILD_ROOT
 #Don't conflict with netcdf
 rm $RPM_BUILD_ROOT%{_bindir}/nc* $RPM_BUILD_ROOT%{_mandir}/man1/nc*
 
@@ -77,6 +78,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Oct 17 2007 Patrice Dumas <pertusus@free.fr> 4.2r2-1
+- update to 4.2r2
+
 * Fri Aug 24 2007 Orion Poplawski <orion@cora.nwra.com> 4.2r1-15
 - Update license tag to BSD
 - Rebuild for BuildID
