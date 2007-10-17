@@ -1,6 +1,6 @@
 Name: hdf
 Version: 4.2r2
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: A general purpose library and file format for storing scientific data
 License: BSD
 Group: System Environment/Libraries
@@ -78,7 +78,7 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
-* Wed Oct 17 2007 Patrice Dumas <pertusus@free.fr> 4.2r2-1
+* Wed Oct 17 2007 Patrice Dumas <pertusus@free.fr> 4.2r2-2
 - update to 4.2r2
 
 * Fri Aug 24 2007 Orion Poplawski <orion@cora.nwra.com> 4.2r1-15
