@@ -1,6 +1,6 @@
 Name: hdf
 Version: 4.2r2
-Release: 2%{?dist}
+Release: 3%{?dist}
 Summary: A general purpose library and file format for storing scientific data
 License: BSD
 Group: System Environment/Libraries
@@ -39,23 +39,50 @@ HDF development headers and libraries.
 %patch1 -p1 -b .ppc
 
 chmod a-x *hdf/*/*.c hdf/*/*.h
+# restore include file timestamps modified by patching
+touch -r ./hdf/src/hdfi.h.ppc ./hdf/src/hdfi.h
+touch -r ./mfhdf/libsrc/local_nc.h.ppc ./mfhdf/libsrc/local_nc.h
+touch -r ./mfhdf/libsrc/config/netcdf-linux.h.ppc ./mfhdf/libsrc/config/netcdf-linux.h
 
 
 %build
+# avoid upstream compiler flags settings
 rm config/*linux-gnu
 export CFLAGS="$RPM_OPT_FLAGS -fPIC"
 export FFLAGS="$RPM_OPT_FLAGS -ffixed-line-length-none"
-%configure F77=gfortran --disable-production \
+%configure F77=gfortran --disable-production --disable-netcdf \
  --includedir=%{_includedir}/%{name} --libdir=%{_libdir}/%{name}
-make
 
+make
+# correct the timestamps based on files used to generate the header files
+touch -r ./mfhdf/fortran/config/netcdf-linux.inc mfhdf/fortran/netcdf.inc
+touch -r ./mfhdf/libsrc/config/netcdf-linux.h mfhdf/libsrc/netcdf.h
+touch -r hdf/src/hdf.inc hdf/src/hdf.f90
+touch -r hdf/src/dffunc.inc hdf/src/dffunc.f90
+touch -r mfhdf/fortran/mffunc.inc mfhdf/fortran/mffunc.f90
+# netcdf fortran include need same treatement, but they are not shipped
 
 %install
 rm -rf $RPM_BUILD_ROOT
-make install DESTDIR=$RPM_BUILD_ROOT
+make install DESTDIR=$RPM_BUILD_ROOT INSTALL='install -p'
 #Don't conflict with netcdf
-rm $RPM_BUILD_ROOT%{_bindir}/nc* $RPM_BUILD_ROOT%{_mandir}/man1/nc*
+#rm $RPM_BUILD_ROOT%{_bindir}/nc* $RPM_BUILD_ROOT%{_mandir}/man1/nc*
+for file in ncdump ncgen; do
+  mv $RPM_BUILD_ROOT%{_bindir}/$file $RPM_BUILD_ROOT%{_bindir}/h$file
+  # man pages are the same than netcdf ones
+  rm $RPM_BUILD_ROOT%{_mandir}/man1/${file}.1
+done
 
+# this is done to have the same timestamp on multiarch setups
+touch -r README $RPM_BUILD_ROOT/%{_includedir}/hdf/h4config.h
+
+# Remove an autoconf conditional from the API that is unused and cause
+# the API to be different on x86 and x86_64
+pushd $RPM_BUILD_ROOT/%{_includedir}/hdf
+grep -v 'H4_SIZEOF_INTP' h4config.h > h4config.h.tmp
+touch -r h4config.h h4config.h.tmp
+mv h4config.h.tmp h4config.h
+popd
 
 %check
 make check
@@ -78,6 +105,12 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon Oct 29 2007 Patrice Dumas <pertusus@free.fr> 4.2r2-3
+- ship hdf enabled nc* utils as hnc*
+- add --disable-netcdf that replaces HAVE_NETCDF
+- keep include files timestamps, and have the same accross arches
+- fix multiarch difference in include files (#341491)
+
 * Wed Oct 17 2007 Patrice Dumas <pertusus@free.fr> 4.2r2-2
 - update to 4.2r2
 
