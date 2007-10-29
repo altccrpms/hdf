@@ -1,6 +1,6 @@
 Name: hdf
 Version: 4.2r2
-Release: 3%{?dist}
+Release: 4%{?dist}
 Summary: A general purpose library and file format for storing scientific data
 License: BSD
 Group: System Environment/Libraries
@@ -65,6 +65,8 @@ touch -r mfhdf/fortran/mffunc.inc mfhdf/fortran/mffunc.f90
 %install
 rm -rf $RPM_BUILD_ROOT
 make install DESTDIR=$RPM_BUILD_ROOT INSTALL='install -p'
+# install netcdf.h it is needed for definition of sd_nc* symbols
+install -p -m0644 mfhdf/libsrc/netcdf.h $RPM_BUILD_ROOT%{_includedir}/hdf/
 #Don't conflict with netcdf
 #rm $RPM_BUILD_ROOT%{_bindir}/nc* $RPM_BUILD_ROOT%{_mandir}/man1/nc*
 for file in ncdump ncgen; do
@@ -105,6 +107,10 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon Oct 29 2007 Patrice Dumas <pertusus@free.fr> 4.2r2-4
+- install the netcdf.h file that describes the netcdf2 hdf enabled
+  API
+
 * Mon Oct 29 2007 Patrice Dumas <pertusus@free.fr> 4.2r2-3
 - ship hdf enabled nc* utils as hnc*
 - add --disable-netcdf that replaces HAVE_NETCDF
