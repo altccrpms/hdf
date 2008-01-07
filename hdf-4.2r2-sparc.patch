@@ -14,7 +14,7 @@ diff -Nru HDF4.2r2.orig/hdf/src/hdfi.h HDF4.2r2/hdf/src/hdfi.h
  #endif /*Linux PPC */
  
 +/* Linux Sparc32/64 */
-+#if defined __sparc__ || !defined __sparc64__
++#if defined __sparc__ || defined __sparc64__
 +
 +#ifdef GOT_MACHINE
 +If you get an error on this line more than one machine type has been defined.
