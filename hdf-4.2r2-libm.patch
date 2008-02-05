@@ -1,0 +1,22 @@
+--- HDF4.2r2/mfhdf/hdiff/Makefile.in.libm	2008-02-05 14:36:29.000000000 -0700
++++ HDF4.2r2/mfhdf/hdiff/Makefile.in	2008-02-05 14:36:52.000000000 -0700
+@@ -196,7 +196,7 @@
+                 hdiff_mattbl.c hdiff_gattr.c hdiff_misc.c hdiff_sds.c       \
+                 hdiff_table.c hdiff_vs.c hdiff_dim.c
+ 
+-hdiff_LDADD = ../libsrc/libmfhdf.a $(top_builddir)/hdf/src/libdf.a @LIBS@
++hdiff_LDADD = ../libsrc/libmfhdf.a $(top_builddir)/hdf/src/libdf.a -lm
+ hdiff_DEPENDENCIES = $(top_builddir)/hdf/src/libdf.a ../libsrc/libmfhdf.a
+ 
+ #############################################################################
+--- HDF4.2r2/mfhdf/hrepack/Makefile.in.libm	2007-09-18 09:12:00.000000000 -0600
++++ HDF4.2r2/mfhdf/hrepack/Makefile.in	2008-02-05 14:58:41.000000000 -0700
+@@ -232,7 +232,7 @@
+                        ../hdiff/hdiff_sds.c ../hdiff/hdiff_table.c          \
+                        ../hdiff/hdiff_vs.c ../hdiff/hdiff_dim.c
+ 
+-test_hrepack_LDADD = ../libsrc/libmfhdf.a $(top_builddir)/hdf/src/libdf.a
++test_hrepack_LDADD = ../libsrc/libmfhdf.a $(top_builddir)/hdf/src/libdf.a -lm
+ test_hrepack_DEPENDENCIES = $(top_builddir)/hdf/src/libdf.a ../libsrc/libmfhdf.a
+ hrepack_check_SOURCES = hrepack_check.c
+ hrepack_check_LDADD = ../libsrc/libmfhdf.a $(top_builddir)/hdf/src/libdf.a

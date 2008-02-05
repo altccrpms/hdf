@@ -1,6 +1,6 @@
 Name: hdf
 Version: 4.2r2
-Release: 6%{?dist}
+Release: 7%{?dist}
 Summary: A general purpose library and file format for storing scientific data
 License: BSD
 Group: System Environment/Libraries
@@ -10,6 +10,7 @@ Patch0: hdf-4.2r1p4-maxavailfiles.patch
 Patch1: hdf-4.2r2-ppc.patch
 Patch2: hdf-4.2r2-sparc.patch
 Patch3: hdf-4.2r2-s390.patch
+Patch4: hdf-4.2r2-libm.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires: flex byacc libjpeg-devel zlib-devel
 BuildRequires: gcc-gfortran
@@ -41,6 +42,7 @@ HDF development headers and libraries.
 %patch1 -p1 -b .ppc
 %patch2 -p1 -b .sparc
 %patch3 -p1 -b .s390
+%patch4 -p1 -b .libm
 
 chmod a-x *hdf/*/*.c hdf/*/*.h
 # restore include file timestamps modified by patching
@@ -111,6 +113,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Feb  5 2008 Orion Poplawski <orion@cora.nwra.com> 4.2.r2-7
+- Add patch to add -lm to hdiff link
+
 * Tue Feb  5 2008 Orion Poplawski <orion@cora.nwra.com> 4.2.r2-6
 - Add patch for s390 support (bug #431511)
 
