@@ -1,6 +1,6 @@
 Name: hdf
 Version: 4.2r2
-Release: 5%{?dist}
+Release: 6%{?dist}
 Summary: A general purpose library and file format for storing scientific data
 License: BSD
 Group: System Environment/Libraries
@@ -9,6 +9,7 @@ Source0: ftp://ftp.hdfgroup.org/HDF/HDF_Current/src/HDF%{version}.tar.gz
 Patch0: hdf-4.2r1p4-maxavailfiles.patch
 Patch1: hdf-4.2r2-ppc.patch
 Patch2: hdf-4.2r2-sparc.patch
+Patch3: hdf-4.2r2-s390.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires: flex byacc libjpeg-devel zlib-devel
 BuildRequires: gcc-gfortran
@@ -39,6 +40,7 @@ HDF development headers and libraries.
 %patch -p1 -b .maxavailfiles
 %patch1 -p1 -b .ppc
 %patch2 -p1 -b .sparc
+%patch3 -p1 -b .s390
 
 chmod a-x *hdf/*/*.c hdf/*/*.h
 # restore include file timestamps modified by patching
@@ -109,6 +111,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Feb  5 2008 Orion Poplawski <orion@cora.nwra.com> 4.2.r2-6
+- Add patch for s390 support (bug #431511)
+
 * Mon Jan  7 2008 Orion Poplawski <orion@cora.nwra.com> 4.2.r2-5
 - Add patches for sparc support (bug #427639)
 
