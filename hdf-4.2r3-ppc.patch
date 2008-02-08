@@ -67,27 +67,6 @@ diff -up HDF4.2r2/hdf/src/hdfi.h.ppc HDF4.2r2/hdf/src/hdfi.h
  /*#ifndef GOT_MACHINE
  No machine type has been defined.  Your Makefile needs to have someing like
  -DSUN or -DUNICOS in order for the HDF internal structures to be defined
-diff -up HDF4.2r2/mfhdf/libsrc/cdf.c.ppc HDF4.2r2/mfhdf/libsrc/cdf.c
-diff -up HDF4.2r2/mfhdf/libsrc/hdftest.c.ppc HDF4.2r2/mfhdf/libsrc/hdftest.c
-diff -up HDF4.2r2/mfhdf/libsrc/local_nc.h.ppc HDF4.2r2/mfhdf/libsrc/local_nc.h
---- HDF4.2r2/mfhdf/libsrc/local_nc.h.ppc	2007-09-17 07:01:50.000000000 +0200
-+++ HDF4.2r2/mfhdf/libsrc/local_nc.h	2007-10-17 22:48:25.000000000 +0200
-@@ -66,6 +66,15 @@
- #endif /* !macintosh */
- #endif /* NO_SYSTEM_XDR_INCLUDES */
- 
-+#ifndef SWAP
-+#ifdef __GLIBC__
-+#include <endian.h>
-+#if __BYTE_ORDER == __LITTLE_ENDIAN
-+#define SWAP
-+#endif
-+#endif /* __GLIBC__ */
-+#endif /* !SWAP */
-+
- #include	"netcdf.h" /* needed for defs of nc_type, ncvoid, ... */
- 
- /* ptr argument type in internal functions */
 diff -up HDF4.2r2/mfhdf/libsrc/array.c.ppc HDF4.2r2/mfhdf/libsrc/array.c
 diff -up HDF4.2r2/mfhdf/libsrc/putget.c.ppc HDF4.2r2/mfhdf/libsrc/putget.c
 diff -up HDF4.2r2/mfhdf/libsrc/netcdf.h.in.ppc HDF4.2r2/mfhdf/libsrc/netcdf.h.in

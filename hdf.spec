@@ -1,13 +1,13 @@
 Name: hdf
-Version: 4.2r2
-Release: 7%{?dist}
+Version: 4.2r3
+Release: 1%{?dist}
 Summary: A general purpose library and file format for storing scientific data
 License: BSD
 Group: System Environment/Libraries
 URL: http://hdf.ncsa.uiuc.edu/hdf4.html
 Source0: ftp://ftp.hdfgroup.org/HDF/HDF_Current/src/HDF%{version}.tar.gz
 Patch0: hdf-4.2r1p4-maxavailfiles.patch
-Patch1: hdf-4.2r2-ppc.patch
+Patch1: hdf-4.2r3-ppc.patch
 Patch2: hdf-4.2r2-sparc.patch
 Patch3: hdf-4.2r2-s390.patch
 Patch4: hdf-4.2r2-libm.patch
@@ -47,7 +47,6 @@ HDF development headers and libraries.
 chmod a-x *hdf/*/*.c hdf/*/*.h
 # restore include file timestamps modified by patching
 touch -r ./hdf/src/hdfi.h.ppc ./hdf/src/hdfi.h
-touch -r ./mfhdf/libsrc/local_nc.h.ppc ./mfhdf/libsrc/local_nc.h
 touch -r ./mfhdf/libsrc/config/netcdf-linux.h.ppc ./mfhdf/libsrc/config/netcdf-linux.h
 
 
@@ -113,6 +112,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Feb  5 2008 Orion Poplawski <orion@cora.nwra.com> 4.2.r3-1
+- Update to 4.2r3
+
 * Tue Feb  5 2008 Orion Poplawski <orion@cora.nwra.com> 4.2.r2-7
 - Add patch to add -lm to hdiff link
 
