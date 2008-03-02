@@ -1,6 +1,6 @@
 Name: hdf
 Version: 4.2r3
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: A general purpose library and file format for storing scientific data
 License: BSD
 Group: System Environment/Libraries
@@ -46,8 +46,8 @@ HDF development headers and libraries.
 
 chmod a-x *hdf/*/*.c hdf/*/*.h
 # restore include file timestamps modified by patching
-touch -r ./hdf/src/hdfi.h.ppc ./hdf/src/hdfi.h
-touch -r ./mfhdf/libsrc/config/netcdf-linux.h.ppc ./mfhdf/libsrc/config/netcdf-linux.h
+touch -c -r ./hdf/src/hdfi.h.ppc ./hdf/src/hdfi.h
+touch -c -r ./mfhdf/libsrc/config/netcdf-linux.h.ppc ./mfhdf/libsrc/config/netcdf-linux.h
 
 
 %build
@@ -60,18 +60,15 @@ export FFLAGS="$RPM_OPT_FLAGS -ffixed-line-length-none"
 
 make
 # correct the timestamps based on files used to generate the header files
-touch -r ./mfhdf/fortran/config/netcdf-linux.inc mfhdf/fortran/netcdf.inc
-touch -r ./mfhdf/libsrc/config/netcdf-linux.h mfhdf/libsrc/netcdf.h
-touch -r hdf/src/hdf.inc hdf/src/hdf.f90
-touch -r hdf/src/dffunc.inc hdf/src/dffunc.f90
-touch -r mfhdf/fortran/mffunc.inc mfhdf/fortran/mffunc.f90
+touch -c -r ./mfhdf/fortran/config/netcdf-linux.inc mfhdf/fortran/netcdf.inc
+touch -c -r hdf/src/hdf.inc hdf/src/hdf.f90
+touch -c -r hdf/src/dffunc.inc hdf/src/dffunc.f90
+touch -c -r mfhdf/fortran/mffunc.inc mfhdf/fortran/mffunc.f90
 # netcdf fortran include need same treatement, but they are not shipped
 
 %install
 rm -rf $RPM_BUILD_ROOT
 make install DESTDIR=$RPM_BUILD_ROOT INSTALL='install -p'
-# install netcdf.h it is needed for definition of sd_nc* symbols
-install -p -m0644 mfhdf/libsrc/netcdf.h $RPM_BUILD_ROOT%{_includedir}/hdf/
 #Don't conflict with netcdf
 #rm $RPM_BUILD_ROOT%{_bindir}/nc* $RPM_BUILD_ROOT%{_mandir}/man1/nc*
 for file in ncdump ncgen; do
@@ -81,13 +78,13 @@ for file in ncdump ncgen; do
 done
 
 # this is done to have the same timestamp on multiarch setups
-touch -r README $RPM_BUILD_ROOT/%{_includedir}/hdf/h4config.h
+touch -c -r README $RPM_BUILD_ROOT/%{_includedir}/hdf/h4config.h
 
 # Remove an autoconf conditional from the API that is unused and cause
 # the API to be different on x86 and x86_64
 pushd $RPM_BUILD_ROOT/%{_includedir}/hdf
 grep -v 'H4_SIZEOF_INTP' h4config.h > h4config.h.tmp
-touch -r h4config.h h4config.h.tmp
+touch -c -r h4config.h h4config.h.tmp
 mv h4config.h.tmp h4config.h
 popd
 
@@ -112,6 +109,10 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sun Mar  2 2008 Patrice Dumas <pertusus@free.fr> 4.2r3-2
+- don't ship an empty netcdf.h file. The related definitions are now
+  in hdf4_netcdf.h
+
 * Tue Feb  5 2008 Orion Poplawski <orion@cora.nwra.com> 4.2.r3-1
 - Update to 4.2r3
 
