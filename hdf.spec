@@ -1,6 +1,6 @@
 Name: hdf
 Version: 4.2r3
-Release: 2%{?dist}
+Release: 3%{?dist}
 Summary: A general purpose library and file format for storing scientific data
 License: BSD
 Group: System Environment/Libraries
@@ -38,7 +38,7 @@ HDF development headers and libraries.
 
 %prep
 %setup -q -n HDF%{version}
-%patch -p1 -b .maxavailfiles
+%patch0 -p1 -b .maxavailfiles
 %patch1 -p1 -b .ppc
 %patch2 -p1 -b .sparc
 %patch3 -p1 -b .s390
@@ -109,6 +109,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sun Sep 21 2008 Ville Skyttä <ville.skytta at iki.fi> - 4.2r3-3
+- Fix Patch0:/%%patch mismatch.
+
 * Sun Mar  2 2008 Patrice Dumas <pertusus@free.fr> 4.2r3-2
 - don't ship an empty netcdf.h file. The related definitions are now
   in hdf4_netcdf.h
