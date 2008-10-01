@@ -1,0 +1,11 @@
+--- HDF4.2r3/mfhdf/libsrc/file.c.maxavailfiles	2008-01-27 09:47:11.000000000 -0700
++++ HDF4.2r3/mfhdf/libsrc/file.c	2008-10-01 11:48:53.000000000 -0600
+@@ -45,7 +45,7 @@
+ 
+ /* Maximum number of files can be opened at one time; subtract 3 from
+    the system allowed to account for stdin, stdout, and stderr */
+-#define MAX_AVAIL_OPENFILES          (MAX_SYS_OPENFILES - 3)
++#define MAX_AVAIL_OPENFILES          (MAX_SYS_OPENFILES - 10)
+ 
+ static int _curr_opened = 0 ; /* the number of files currently opened */
+ /* NOTE: _ncdf might have been the number of files currently opened, yet it

@@ -1,12 +1,12 @@
 Name: hdf
 Version: 4.2r3
-Release: 3%{?dist}
+Release: 4%{?dist}
 Summary: A general purpose library and file format for storing scientific data
 License: BSD
 Group: System Environment/Libraries
 URL: http://hdfgroup.org/products/hdf4/index.html
 Source0: ftp://ftp.hdfgroup.org/HDF/HDF_Current/src/HDF%{version}.tar.gz
-Patch0: hdf-4.2r1p4-maxavailfiles.patch
+Patch0: hdf-4.2r3-maxavailfiles.patch
 Patch1: hdf-4.2r3-ppc.patch
 Patch2: hdf-4.2r2-sparc.patch
 Patch3: hdf-4.2r2-s390.patch
@@ -109,6 +109,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Oct  1 2008 Orion Poplawski <orion@cora.nwra.com> 4.2.r3-4
+- Rebase maxavailfiles patch
+
 * Sun Sep 21 2008 Ville Skyttä <ville.skytta at iki.fi> - 4.2r3-3
 - Fix Patch0:/%%patch mismatch.
 
