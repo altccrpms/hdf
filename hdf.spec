@@ -4,7 +4,7 @@ Release: 3%{?dist}
 Summary: A general purpose library and file format for storing scientific data
 License: BSD
 Group: System Environment/Libraries
-URL: http://hdf.ncsa.uiuc.edu/hdf4.html
+URL: http://hdfgroup.org/products/hdf4/index.html
 Source0: ftp://ftp.hdfgroup.org/HDF/HDF_Current/src/HDF%{version}.tar.gz
 Patch0: hdf-4.2r1p4-maxavailfiles.patch
 Patch1: hdf-4.2r3-ppc.patch
