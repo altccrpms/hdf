@@ -1,6 +1,6 @@
 Name: hdf
-Version: 4.2r3
-Release: 5%{?dist}
+Version: 4.2r4
+Release: 1%{?dist}
 Summary: A general purpose library and file format for storing scientific data
 License: BSD
 Group: System Environment/Libraries
@@ -10,7 +10,8 @@ Patch0: hdf-4.2r3-maxavailfiles.patch
 Patch1: hdf-4.2r3-ppc.patch
 Patch2: hdf-4.2r2-sparc.patch
 Patch3: hdf-4.2r2-s390.patch
-Patch4: hdf-4.2r2-libm.patch
+# Reported upstream to help@hdfgroup.org
+Patch4: hdf-4.2r4-buffer.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires: flex byacc libjpeg-devel zlib-devel
 BuildRequires: gcc-gfortran
@@ -42,7 +43,7 @@ HDF development headers and libraries.
 %patch1 -p1 -b .ppc
 %patch2 -p1 -b .sparc
 %patch3 -p1 -b .s390
-%patch4 -p1 -b .libm
+%patch4 -p1 -b .buffer
 
 chmod a-x *hdf/*/*.c hdf/*/*.h
 # restore include file timestamps modified by patching
@@ -109,10 +110,15 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Feb 25 2009 Orion Poplawski <orion@cora.nwra.com> 4.2r4-1
+- Update to 4.2r4
+- Add patch to increase buffer size in test
+- Drop upstreamed libm patch
+
 * Tue Feb 24 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 4.2r3-5
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_11_Mass_Rebuild
 
-* Wed Oct  1 2008 Orion Poplawski <orion@cora.nwra.com> 4.2.r3-4
+* Wed Oct  1 2008 Orion Poplawski <orion@cora.nwra.com> 4.2r3-4
 - Rebase maxavailfiles patch
 
 * Sun Sep 21 2008 Ville Skyttä <ville.skytta at iki.fi> - 4.2r3-3
