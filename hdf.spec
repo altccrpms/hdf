@@ -1,6 +1,6 @@
 Name: hdf
 Version: 4.2r4
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: A general purpose library and file format for storing scientific data
 License: BSD
 Group: System Environment/Libraries
@@ -30,6 +30,7 @@ grids. You can also mix and match them in HDF files according to your needs.
 %package devel
 Summary: HDF development files
 Group: Development/Libraries
+Provides: %{name}-static = %{version}-%{release}
 Requires: %{name} = %{version}-%{release}
 Requires: libjpeg-devel zlib-devel
 
@@ -110,6 +111,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Apr 7 2009 Orion Poplawski <orion@cora.nwra.com> 4.2r4-2
+- Add Provides hdf-static to hdf-devel (bug #494529)
+
 * Wed Feb 25 2009 Orion Poplawski <orion@cora.nwra.com> 4.2r4-1
 - Update to 4.2r4
 - Add patch to increase buffer size in test
