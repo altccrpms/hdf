@@ -1,6 +1,6 @@
 Name: hdf
 Version: 4.2r4
-Release: 2%{?dist}
+Release: 3%{?dist}
 Summary: A general purpose library and file format for storing scientific data
 License: BSD
 Group: System Environment/Libraries
@@ -111,6 +111,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Fri Jul 24 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 4.2r4-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_12_Mass_Rebuild
+
 * Tue Apr 7 2009 Orion Poplawski <orion@cora.nwra.com> 4.2r4-2
 - Add Provides hdf-static to hdf-devel (bug #494529)
 
