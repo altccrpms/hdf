@@ -1,6 +1,6 @@
 Name: hdf
 Version: 4.2r4
-Release: 3%{?dist}
+Release: 4%{?dist}
 Summary: A general purpose library and file format for storing scientific data
 License: BSD
 Group: System Environment/Libraries
@@ -56,7 +56,7 @@ touch -c -r ./mfhdf/libsrc/config/netcdf-linux.h.ppc ./mfhdf/libsrc/config/netcd
 # avoid upstream compiler flags settings
 rm config/*linux-gnu
 export CFLAGS="$RPM_OPT_FLAGS -fPIC"
-export FFLAGS="$RPM_OPT_FLAGS -ffixed-line-length-none"
+export FFLAGS="$RPM_OPT_FLAGS -fPIC -ffixed-line-length-none"
 %configure F77=gfortran --disable-production --disable-netcdf \
  --includedir=%{_includedir}/%{name} --libdir=%{_libdir}/%{name}
 
@@ -111,6 +111,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Thu Aug 13 2009 Orion Poplawski <orion@cora.nwra.com> 4.2r4-4
+- Add -fPIC to FFLAGS
+
 * Fri Jul 24 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 4.2r4-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_12_Mass_Rebuild
 
