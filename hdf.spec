@@ -1,6 +1,6 @@
 Name: hdf
 Version: 4.2r4
-Release: 4%{?dist}
+Release: 5%{?dist}
 Summary: A general purpose library and file format for storing scientific data
 License: BSD
 Group: System Environment/Libraries
@@ -14,7 +14,11 @@ Patch3: hdf-4.2r2-s390.patch
 Patch4: hdf-4.2r4-buffer.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires: flex byacc libjpeg-devel zlib-devel
+%if "%{?dist}" != ".el4"
 BuildRequires: gcc-gfortran
+%else
+BuildRequires: gcc-g77
+%endif
 
 
 %description
@@ -57,7 +61,7 @@ touch -c -r ./mfhdf/libsrc/config/netcdf-linux.h.ppc ./mfhdf/libsrc/config/netcd
 rm config/*linux-gnu
 export CFLAGS="$RPM_OPT_FLAGS -fPIC"
 export FFLAGS="$RPM_OPT_FLAGS -fPIC -ffixed-line-length-none"
-%configure F77=gfortran --disable-production --disable-netcdf \
+%configure --disable-production --disable-netcdf \
  --includedir=%{_includedir}/%{name} --libdir=%{_libdir}/%{name}
 
 make
@@ -111,6 +115,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Fri Sep 18 2009 Orion Poplawski <orion@cora.nwra.com> 4.2r4-5
+- Add EL4 build conditionals
+
 * Thu Aug 13 2009 Orion Poplawski <orion@cora.nwra.com> 4.2r4-4
 - Add -fPIC to FFLAGS
 
