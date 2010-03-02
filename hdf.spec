@@ -1,17 +1,15 @@
 Name: hdf
-Version: 4.2r4
-Release: 5%{?dist}
+Version: 4.2.5
+Release: 1%{?dist}
 Summary: A general purpose library and file format for storing scientific data
 License: BSD
 Group: System Environment/Libraries
 URL: http://hdfgroup.org/products/hdf4/index.html
-Source0: ftp://ftp.hdfgroup.org/HDF/HDF_Current/src/HDF%{version}.tar.gz
-Patch0: hdf-4.2r3-maxavailfiles.patch
-Patch1: hdf-4.2r3-ppc.patch
-Patch2: hdf-4.2r2-sparc.patch
-Patch3: hdf-4.2r2-s390.patch
-# Reported upstream to help@hdfgroup.org
-Patch4: hdf-4.2r4-buffer.patch
+Source0: ftp://ftp.hdfgroup.org/HDF/HDF_Current/src/%{name}-%{version}.tar.bz2
+Patch0: hdf-4.2.5-maxavailfiles.patch
+Patch1: hdf-4.2.4-ppc.patch
+Patch2: hdf-4.2.4-sparc.patch
+Patch3: hdf-4.2.4-s390.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires: flex byacc libjpeg-devel zlib-devel
 %if "%{?dist}" != ".el4"
@@ -43,12 +41,11 @@ HDF development headers and libraries.
 
 
 %prep
-%setup -q -n HDF%{version}
+%setup -q
 %patch0 -p1 -b .maxavailfiles
 %patch1 -p1 -b .ppc
 %patch2 -p1 -b .sparc
 %patch3 -p1 -b .s390
-%patch4 -p1 -b .buffer
 
 chmod a-x *hdf/*/*.c hdf/*/*.h
 # restore include file timestamps modified by patching
@@ -84,7 +81,7 @@ for file in ncdump ncgen; do
 done
 
 # this is done to have the same timestamp on multiarch setups
-touch -c -r README $RPM_BUILD_ROOT/%{_includedir}/hdf/h4config.h
+touch -c -r README.txt $RPM_BUILD_ROOT/%{_includedir}/hdf/h4config.h
 
 # Remove an autoconf conditional from the API that is unused and cause
 # the API to be different on x86 and x86_64
@@ -104,7 +101,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root,0755)
-%doc COPYING MANIFEST README release_notes/*.txt
+%doc COPYING MANIFEST README.txt release_notes/*.txt
 %{_bindir}/*
 %{_mandir}/man1/*.gz
 
@@ -115,6 +112,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Mar 2 2010 Orion Poplawski <orion@cora.nwra.com> 4.2.5-1
+- Update to 4.2.5
+
 * Fri Sep 18 2009 Orion Poplawski <orion@cora.nwra.com> 4.2r4-5
 - Add EL4 build conditionals
 
