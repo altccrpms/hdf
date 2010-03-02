@@ -1,6 +1,6 @@
-diff -Nru HDF4.2r2.orig/hdf/src/hdfi.h HDF4.2r2/hdf/src/hdfi.h
---- HDF4.2r2.orig/hdf/src/hdfi.h	2007-09-17 18:45:17.000000000 +0300
-+++ HDF4.2r2/hdf/src/hdfi.h	2008-01-06 07:23:42.000000000 +0200
+diff -up hdf-4.2.4-snap8/hdf/src/hdfi.h.sparc hdf-4.2.4-snap8/hdf/src/hdfi.h
+--- hdf-4.2.4-snap8/hdf/src/hdfi.h.sparc	2010-02-01 13:28:25.361387271 -0700
++++ hdf-4.2.4-snap8/hdf/src/hdfi.h	2010-02-01 13:31:46.343387138 -0700
 @@ -77,6 +77,7 @@
  #define     DFMT_LINUX64        0x4441
  #define     DFMT_POWERPC64      0x1111
@@ -9,7 +9,7 @@ diff -Nru HDF4.2r2.orig/hdf/src/hdfi.h HDF4.2r2/hdf/src/hdfi.h
  
  /* I/O library constants */
  #define UNIXUNBUFIO 1
-@@ -1444,6 +1445,66 @@
+@@ -1392,6 +1393,66 @@ typedef long              hdf_pint_t;   
  
  #endif /*Linux PPC */
  
@@ -73,6 +73,6 @@ diff -Nru HDF4.2r2.orig/hdf/src/hdfi.h HDF4.2r2/hdf/src/hdfi.h
 +
 +#endif /* Linux Sparc32/64 */
 +
- /*#ifndef GOT_MACHINE
- No machine type has been defined.  Your Makefile needs to have someing like
- -DSUN or -DUNICOS in order for the HDF internal structures to be defined
+ /*-----------------------------------------------------*/
+ /* 64-bit Free BSD */
+ 
