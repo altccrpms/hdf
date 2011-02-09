@@ -1,6 +1,6 @@
 Name: hdf
 Version: 4.2.5
-Release: 2%{?dist}
+Release: 3%{?dist}
 Summary: A general purpose library and file format for storing scientific data
 License: BSD
 Group: System Environment/Libraries
@@ -115,6 +115,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Feb 09 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 4.2.5-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild
+
 * Fri Dec 10 2010 Orion Poplawski <orion@cora.nwra.com> 4.2.5-2
 - Add patch to disable jpeg tests due to change to jpeg-turbo, FTBFS bug 631337
 
