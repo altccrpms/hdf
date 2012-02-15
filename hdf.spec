@@ -1,13 +1,13 @@
 Name: hdf
-Version: 4.2.6
-Release: 2%{?dist}
+Version: 4.2.7
+Release: 1%{?dist}
 Summary: A general purpose library and file format for storing scientific data
 License: BSD
 Group: System Environment/Libraries
 URL: http://hdfgroup.org/products/hdf4/index.html
 Source0: ftp://ftp.hdfgroup.org/HDF/HDF_Current/src/%{name}-%{version}.tar.bz2
 Patch0: hdf-4.2.5-maxavailfiles.patch
-Patch1: hdf-4.2.4-ppc.patch
+Patch1: hdf-ppc.patch
 Patch2: hdf-4.2.4-sparc.patch
 Patch3: hdf-4.2.4-s390.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
@@ -112,6 +112,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Feb 15 2012 Orion Poplawski <orion@cora.nwra.com> 4.2.7-1
+- Update to 4.2.7
+
 * Fri Jan 13 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 4.2.6-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_17_Mass_Rebuild
 

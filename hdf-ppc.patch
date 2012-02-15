@@ -1,6 +1,6 @@
-diff -up hdf-4.2.4-snap8/hdf/src/hdfi.h.ppc hdf-4.2.4-snap8/hdf/src/hdfi.h
---- hdf-4.2.4-snap8/hdf/src/hdfi.h.ppc	2010-01-17 21:24:56.000000000 -0700
-+++ hdf-4.2.4-snap8/hdf/src/hdfi.h	2010-02-01 13:21:54.874623840 -0700
+diff -up hdf-4.2.7/hdf/src/hdfi.h.ppc hdf-4.2.7/hdf/src/hdfi.h
+--- hdf-4.2.7/hdf/src/hdfi.h.ppc	2012-02-06 07:02:43.000000000 -0700
++++ hdf-4.2.7/hdf/src/hdfi.h	2012-02-15 09:53:53.102440608 -0700
 @@ -76,6 +76,7 @@
  #define     DFMT_IA64           0x4441
  #define     DFMT_LINUX64        0x4441
@@ -9,7 +9,7 @@ diff -up hdf-4.2.4-snap8/hdf/src/hdfi.h.ppc hdf-4.2.4-snap8/hdf/src/hdfi.h
  
  /* I/O library constants */
  #define UNIXUNBUFIO 1
-@@ -1340,6 +1341,57 @@ typedef long              hdf_pint_t;   
+@@ -1289,6 +1290,57 @@ typedef long              hdf_pint_t;
  
  #endif /*Linux 64 */
  
@@ -67,9 +67,9 @@ diff -up hdf-4.2.4-snap8/hdf/src/hdfi.h.ppc hdf-4.2.4-snap8/hdf/src/hdfi.h
  /*-----------------------------------------------------*/
  /* 64-bit Free BSD */
  
-diff -up hdf-4.2.4-snap8/mfhdf/fortran/config/jackets-aix.c.ppc hdf-4.2.4-snap8/mfhdf/fortran/config/jackets-aix.c
---- hdf-4.2.4-snap8/mfhdf/fortran/config/jackets-aix.c.ppc	2010-01-17 21:24:52.000000000 -0700
-+++ hdf-4.2.4-snap8/mfhdf/fortran/config/jackets-aix.c	2010-02-01 13:19:15.313387720 -0700
+diff -up hdf-4.2.7/mfhdf/fortran/config/jackets-aix.c.ppc hdf-4.2.7/mfhdf/fortran/config/jackets-aix.c
+--- hdf-4.2.7/mfhdf/fortran/config/jackets-aix.c.ppc	2012-02-06 07:02:13.000000000 -0700
++++ hdf-4.2.7/mfhdf/fortran/config/jackets-aix.c	2012-02-15 09:53:53.104440530 -0700
 @@ -34,7 +34,7 @@
  
  struct ncfils {			/* This will be a common block from Fortran */
@@ -169,7 +169,7 @@ diff -up hdf-4.2.4-snap8/mfhdf/fortran/config/jackets-aix.c.ppc hdf-4.2.4-snap8/
  
  #ifdef HDF
      if ((nc_type) datatype == NC_LONG && handle->file_type!=HDF_FILE) {
-@@ -1855,7 +1855,7 @@ nncapt(cdfid, varid, attname, datatype, 
+@@ -1855,7 +1855,7 @@ nncapt(cdfid, varid, attname, datatype,
  	return;
      }				/* else */
  #endif				/* FORTRAN_HAS_NO_SHORT */
@@ -187,9 +187,9 @@ diff -up hdf-4.2.4-snap8/mfhdf/fortran/config/jackets-aix.c.ppc hdf-4.2.4-snap8/
  
  #ifdef HDF
      if ((nc_type) datatype == NC_LONG && handle->file_type!=HDF_FILE) {
-diff -up hdf-4.2.4-snap8/mfhdf/fortran/config/jackets-alpha.c.ppc hdf-4.2.4-snap8/mfhdf/fortran/config/jackets-alpha.c
---- hdf-4.2.4-snap8/mfhdf/fortran/config/jackets-alpha.c.ppc	2010-01-17 21:24:52.000000000 -0700
-+++ hdf-4.2.4-snap8/mfhdf/fortran/config/jackets-alpha.c	2010-02-01 13:19:15.323387579 -0700
+diff -up hdf-4.2.7/mfhdf/fortran/config/jackets-alpha.c.ppc hdf-4.2.7/mfhdf/fortran/config/jackets-alpha.c
+--- hdf-4.2.7/mfhdf/fortran/config/jackets-alpha.c.ppc	2012-02-06 07:02:13.000000000 -0700
++++ hdf-4.2.7/mfhdf/fortran/config/jackets-alpha.c	2012-02-15 09:53:53.105440491 -0700
 @@ -34,7 +34,7 @@
  
  struct ncfils {			/* This will be a common block from Fortran */
@@ -289,7 +289,7 @@ diff -up hdf-4.2.4-snap8/mfhdf/fortran/config/jackets-alpha.c.ppc hdf-4.2.4-snap
  #ifdef HDF
      if ((nc_type) datatype == NC_LONG && handle->file_type!=HDF_FILE) {
  	long iocount = dimprod (ncount, ndims);	/* product of dimensions */
-@@ -1855,7 +1855,7 @@ nncapt(cdfid, varid, attname, datatype, 
+@@ -1855,7 +1855,7 @@ nncapt(cdfid, varid, attname, datatype,
  	return;
      }				/* else */
  #endif				/* FORTRAN_HAS_NO_SHORT */
@@ -307,9 +307,9 @@ diff -up hdf-4.2.4-snap8/mfhdf/fortran/config/jackets-alpha.c.ppc hdf-4.2.4-snap
  #ifdef HDF
      if ((nc_type) datatype == NC_LONG && handle->file_type!=HDF_FILE) {
  
-diff -up hdf-4.2.4-snap8/mfhdf/fortran/config/jackets-apple.c.ppc hdf-4.2.4-snap8/mfhdf/fortran/config/jackets-apple.c
---- hdf-4.2.4-snap8/mfhdf/fortran/config/jackets-apple.c.ppc	2010-01-17 21:24:52.000000000 -0700
-+++ hdf-4.2.4-snap8/mfhdf/fortran/config/jackets-apple.c	2010-02-01 13:19:15.318388441 -0700
+diff -up hdf-4.2.7/mfhdf/fortran/config/jackets-apple.c.ppc hdf-4.2.7/mfhdf/fortran/config/jackets-apple.c
+--- hdf-4.2.7/mfhdf/fortran/config/jackets-apple.c.ppc	2012-02-06 07:02:13.000000000 -0700
++++ hdf-4.2.7/mfhdf/fortran/config/jackets-apple.c	2012-02-15 09:53:53.106440453 -0700
 @@ -34,7 +34,7 @@
  
  struct ncfils {			/* This will be a common block from Fortran */
@@ -355,9 +355,9 @@ diff -up hdf-4.2.4-snap8/mfhdf/fortran/config/jackets-apple.c.ppc hdf-4.2.4-snap
  
      if (datatype == NC_LONG)
  	tmpbasis	= sizeof(int);
-diff -up hdf-4.2.4-snap8/mfhdf/fortran/config/jackets-fbsd.c.ppc hdf-4.2.4-snap8/mfhdf/fortran/config/jackets-fbsd.c
---- hdf-4.2.4-snap8/mfhdf/fortran/config/jackets-fbsd.c.ppc	2010-01-17 21:24:52.000000000 -0700
-+++ hdf-4.2.4-snap8/mfhdf/fortran/config/jackets-fbsd.c	2010-02-01 13:19:15.325388057 -0700
+diff -up hdf-4.2.7/mfhdf/fortran/config/jackets-fbsd.c.ppc hdf-4.2.7/mfhdf/fortran/config/jackets-fbsd.c
+--- hdf-4.2.7/mfhdf/fortran/config/jackets-fbsd.c.ppc	2012-02-06 07:02:13.000000000 -0700
++++ hdf-4.2.7/mfhdf/fortran/config/jackets-fbsd.c	2012-02-15 09:53:53.107440415 -0700
 @@ -34,7 +34,7 @@
  
  struct ncfils {			/* This will be a common block from Fortran */
@@ -403,9 +403,9 @@ diff -up hdf-4.2.4-snap8/mfhdf/fortran/config/jackets-fbsd.c.ppc hdf-4.2.4-snap8
      if (datatype == NC_LONG)
  	tmpbasis	= sizeof(int);
      else
-diff -up hdf-4.2.4-snap8/mfhdf/fortran/config/jackets-hpux.c.ppc hdf-4.2.4-snap8/mfhdf/fortran/config/jackets-hpux.c
---- hdf-4.2.4-snap8/mfhdf/fortran/config/jackets-hpux.c.ppc	2010-01-17 21:24:52.000000000 -0700
-+++ hdf-4.2.4-snap8/mfhdf/fortran/config/jackets-hpux.c	2010-02-01 13:19:15.321389852 -0700
+diff -up hdf-4.2.7/mfhdf/fortran/config/jackets-hpux.c.ppc hdf-4.2.7/mfhdf/fortran/config/jackets-hpux.c
+--- hdf-4.2.7/mfhdf/fortran/config/jackets-hpux.c.ppc	2012-02-06 07:02:13.000000000 -0700
++++ hdf-4.2.7/mfhdf/fortran/config/jackets-hpux.c	2012-02-15 09:53:53.109440338 -0700
 @@ -34,7 +34,7 @@
  
  struct ncfils {			/* This will be a common block from Fortran */
@@ -505,7 +505,7 @@ diff -up hdf-4.2.4-snap8/mfhdf/fortran/config/jackets-hpux.c.ppc hdf-4.2.4-snap8
  #ifdef HDF
      if ((nc_type) datatype == NC_LONG && handle->file_type!=HDF_FILE) {
  	long iocount = dimprod (ncount, ndims);	/* product of dimensions */
-@@ -1853,7 +1853,7 @@ nncapt(cdfid, varid, attname, datatype, 
+@@ -1853,7 +1853,7 @@ nncapt(cdfid, varid, attname, datatype,
  	return;
      }				/* else */
  #endif				/* FORTRAN_HAS_NO_SHORT */
@@ -523,9 +523,9 @@ diff -up hdf-4.2.4-snap8/mfhdf/fortran/config/jackets-hpux.c.ppc hdf-4.2.4-snap8
  #ifdef HDF
      if ((nc_type) datatype == NC_LONG && handle->file_type!=HDF_FILE) {
  /*EIP   We need to use int buffer to read data in on the platforms where long is 8 bytes
-diff -up hdf-4.2.4-snap8/mfhdf/fortran/config/jackets-irix6.c.ppc hdf-4.2.4-snap8/mfhdf/fortran/config/jackets-irix6.c
---- hdf-4.2.4-snap8/mfhdf/fortran/config/jackets-irix6.c.ppc	2010-01-17 21:24:52.000000000 -0700
-+++ hdf-4.2.4-snap8/mfhdf/fortran/config/jackets-irix6.c	2010-02-01 13:19:15.308388923 -0700
+diff -up hdf-4.2.7/mfhdf/fortran/config/jackets-irix6.c.ppc hdf-4.2.7/mfhdf/fortran/config/jackets-irix6.c
+--- hdf-4.2.7/mfhdf/fortran/config/jackets-irix6.c.ppc	2012-02-06 07:02:13.000000000 -0700
++++ hdf-4.2.7/mfhdf/fortran/config/jackets-irix6.c	2012-02-15 09:53:53.111440260 -0700
 @@ -34,7 +34,7 @@
  
  struct ncfils {			/* This will be a common block from Fortran */
@@ -625,7 +625,7 @@ diff -up hdf-4.2.4-snap8/mfhdf/fortran/config/jackets-irix6.c.ppc hdf-4.2.4-snap
  #ifdef HDF
      if ((nc_type) datatype == NC_LONG && handle->file_type!=HDF_FILE) {
  	long iocount = dimprod (ncount, ndims);	/* product of dimensions */
-@@ -1852,7 +1852,7 @@ nncapt(cdfid, varid, attname, datatype, 
+@@ -1852,7 +1852,7 @@ nncapt(cdfid, varid, attname, datatype,
  	return;
      }				/* else */
  #endif				/* FORTRAN_HAS_NO_SHORT */
@@ -643,9 +643,9 @@ diff -up hdf-4.2.4-snap8/mfhdf/fortran/config/jackets-irix6.c.ppc hdf-4.2.4-snap
  #ifdef HDF
      if ((nc_type) datatype == NC_LONG && handle->file_type!=HDF_FILE) {
  /* EIP  We need int buffer to read data in on the platfroms where long is 8 bytes
-diff -up hdf-4.2.4-snap8/mfhdf/fortran/config/jackets-linux.c.ppc hdf-4.2.4-snap8/mfhdf/fortran/config/jackets-linux.c
---- hdf-4.2.4-snap8/mfhdf/fortran/config/jackets-linux.c.ppc	2010-01-17 21:24:52.000000000 -0700
-+++ hdf-4.2.4-snap8/mfhdf/fortran/config/jackets-linux.c	2010-02-01 13:19:15.316388314 -0700
+diff -up hdf-4.2.7/mfhdf/fortran/config/jackets-linux.c.ppc hdf-4.2.7/mfhdf/fortran/config/jackets-linux.c
+--- hdf-4.2.7/mfhdf/fortran/config/jackets-linux.c.ppc	2012-02-06 07:02:13.000000000 -0700
++++ hdf-4.2.7/mfhdf/fortran/config/jackets-linux.c	2012-02-15 09:53:53.114440146 -0700
 @@ -34,7 +34,7 @@
  
  struct ncfils {			/* This will be a common block from Fortran */
@@ -745,7 +745,7 @@ diff -up hdf-4.2.4-snap8/mfhdf/fortran/config/jackets-linux.c.ppc hdf-4.2.4-snap
  #ifdef HDF
      if ((nc_type) datatype == NC_LONG && handle->file_type!=HDF_FILE) {
  	long iocount = dimprod (ncount, ndims);	/* product of dimensions */
-@@ -1851,7 +1851,7 @@ nncapt(cdfid, varid, attname, datatype, 
+@@ -1851,7 +1851,7 @@ nncapt(cdfid, varid, attname, datatype,
  	return;
      }				/* else */
  #endif				/* FORTRAN_HAS_NO_SHORT */
@@ -763,9 +763,9 @@ diff -up hdf-4.2.4-snap8/mfhdf/fortran/config/jackets-linux.c.ppc hdf-4.2.4-snap
  #ifdef HDF
      if ((nc_type) datatype == NC_LONG && handle->file_type!=HDF_FILE) {
  /* EIP  We need to use int buffer to read data in on the platforms where long is 8 bytes
-diff -up hdf-4.2.4-snap8/mfhdf/fortran/config/jackets-solaris.c.ppc hdf-4.2.4-snap8/mfhdf/fortran/config/jackets-solaris.c
---- hdf-4.2.4-snap8/mfhdf/fortran/config/jackets-solaris.c.ppc	2010-01-17 21:24:52.000000000 -0700
-+++ hdf-4.2.4-snap8/mfhdf/fortran/config/jackets-solaris.c	2010-02-01 13:19:15.315388002 -0700
+diff -up hdf-4.2.7/mfhdf/fortran/config/jackets-solaris.c.ppc hdf-4.2.7/mfhdf/fortran/config/jackets-solaris.c
+--- hdf-4.2.7/mfhdf/fortran/config/jackets-solaris.c.ppc	2012-02-06 07:02:13.000000000 -0700
++++ hdf-4.2.7/mfhdf/fortran/config/jackets-solaris.c	2012-02-15 09:53:53.116440070 -0700
 @@ -34,7 +34,7 @@
  
  struct ncfils {			/* This will be a common block from Fortran */
@@ -865,7 +865,7 @@ diff -up hdf-4.2.4-snap8/mfhdf/fortran/config/jackets-solaris.c.ppc hdf-4.2.4-sn
  #ifdef HDF
      if ((nc_type) datatype == NC_LONG && handle->file_type!=HDF_FILE) {
  	long iocount = dimprod (ncount, ndims);	/* product of dimensions */
-@@ -1854,7 +1854,7 @@ nncapt(cdfid, varid, attname, datatype, 
+@@ -1854,7 +1854,7 @@ nncapt(cdfid, varid, attname, datatype,
  	return;
      }				/* else */
  #endif				/* FORTRAN_HAS_NO_SHORT */
@@ -883,9 +883,9 @@ diff -up hdf-4.2.4-snap8/mfhdf/fortran/config/jackets-solaris.c.ppc hdf-4.2.4-sn
  #ifdef HDF
      if ((nc_type) datatype == NC_LONG && handle->file_type!=HDF_FILE) {
  /* EIP
-diff -up hdf-4.2.4-snap8/mfhdf/fortran/config/jackets-t3e.c.ppc hdf-4.2.4-snap8/mfhdf/fortran/config/jackets-t3e.c
---- hdf-4.2.4-snap8/mfhdf/fortran/config/jackets-t3e.c.ppc	2010-01-17 21:24:52.000000000 -0700
-+++ hdf-4.2.4-snap8/mfhdf/fortran/config/jackets-t3e.c	2010-02-01 13:19:15.310387183 -0700
+diff -up hdf-4.2.7/mfhdf/fortran/config/jackets-t3e.c.ppc hdf-4.2.7/mfhdf/fortran/config/jackets-t3e.c
+--- hdf-4.2.7/mfhdf/fortran/config/jackets-t3e.c.ppc	2012-02-06 07:02:13.000000000 -0700
++++ hdf-4.2.7/mfhdf/fortran/config/jackets-t3e.c	2012-02-15 09:53:53.118439993 -0700
 @@ -39,7 +39,7 @@
  
  struct ncfils {			/* This will be a common block from Fortran */
@@ -985,7 +985,7 @@ diff -up hdf-4.2.4-snap8/mfhdf/fortran/config/jackets-t3e.c.ppc hdf-4.2.4-snap8/
  #ifdef HDF
      if ((nc_type) datatype == NC_LONG && handle->file_type!=HDF_FILE) {
  	long iocount = dimprod (ncount, ndims);	/* product of dimensions */
-@@ -1869,7 +1869,7 @@ NCAPT(cdfid, varid, attnamed, datatype, 
+@@ -1869,7 +1869,7 @@ NCAPT(cdfid, varid, attnamed, datatype,
  	return;
      }				/* else */
  #endif				/* FORTRAN_HAS_NO_SHORT */
@@ -1003,9 +1003,9 @@ diff -up hdf-4.2.4-snap8/mfhdf/fortran/config/jackets-t3e.c.ppc hdf-4.2.4-snap8/
  #ifdef HDF
      if ((nc_type) datatype == NC_LONG && handle->file_type!=HDF_FILE) {
  	long *longs = (long *) malloc (attlen * sizeof (long));
-diff -up hdf-4.2.4-snap8/mfhdf/fortran/config/jackets-unicos.c.ppc hdf-4.2.4-snap8/mfhdf/fortran/config/jackets-unicos.c
---- hdf-4.2.4-snap8/mfhdf/fortran/config/jackets-unicos.c.ppc	2010-01-17 21:24:52.000000000 -0700
-+++ hdf-4.2.4-snap8/mfhdf/fortran/config/jackets-unicos.c	2010-02-01 13:19:15.311389425 -0700
+diff -up hdf-4.2.7/mfhdf/fortran/config/jackets-unicos.c.ppc hdf-4.2.7/mfhdf/fortran/config/jackets-unicos.c
+--- hdf-4.2.7/mfhdf/fortran/config/jackets-unicos.c.ppc	2012-02-06 07:02:13.000000000 -0700
++++ hdf-4.2.7/mfhdf/fortran/config/jackets-unicos.c	2012-02-15 09:53:53.121439879 -0700
 @@ -39,7 +39,7 @@
  
  struct ncfils {			/* This will be a common block from Fortran */
@@ -1105,7 +1105,7 @@ diff -up hdf-4.2.4-snap8/mfhdf/fortran/config/jackets-unicos.c.ppc hdf-4.2.4-sna
  #ifdef HDF
      if ((nc_type) datatype == NC_LONG && handle->file_type!=HDF_FILE) {
  	long iocount = dimprod (ncount, ndims);	/* product of dimensions */
-@@ -1870,7 +1870,7 @@ NCAPT(cdfid, varid, attnamed, datatype, 
+@@ -1870,7 +1870,7 @@ NCAPT(cdfid, varid, attnamed, datatype,
  	return;
      }				/* else */
  #endif				/* FORTRAN_HAS_NO_SHORT */
@@ -1123,9 +1123,9 @@ diff -up hdf-4.2.4-snap8/mfhdf/fortran/config/jackets-unicos.c.ppc hdf-4.2.4-sna
  #ifdef HDF
      if ((nc_type) datatype == NC_LONG && handle->file_type!=HDF_FILE) {
  	long *longs = (long *) malloc (attlen * sizeof (long));
-diff -up hdf-4.2.4-snap8/mfhdf/libsrc/netcdf.h.in.ppc hdf-4.2.4-snap8/mfhdf/libsrc/netcdf.h.in
---- hdf-4.2.4-snap8/mfhdf/libsrc/netcdf.h.in.ppc	2010-01-17 21:24:53.000000000 -0700
-+++ hdf-4.2.4-snap8/mfhdf/libsrc/netcdf.h.in	2010-02-01 13:19:15.306389107 -0700
+diff -up hdf-4.2.7/mfhdf/libsrc/netcdf.h.in.ppc hdf-4.2.7/mfhdf/libsrc/netcdf.h.in
+--- hdf-4.2.7/mfhdf/libsrc/netcdf.h.in.ppc	2012-02-06 07:02:19.000000000 -0700
++++ hdf-4.2.7/mfhdf/libsrc/netcdf.h.in	2012-02-15 09:53:53.122439840 -0700
 @@ -295,7 +295,7 @@ typedef double        ncdouble;
   */
  #if defined _CRAYMPP
@@ -1135,14 +1135,14 @@ diff -up hdf-4.2.4-snap8/mfhdf/libsrc/netcdf.h.in.ppc hdf-4.2.4-snap8/mfhdf/libs
  typedef int     nclong;   
  #else
  typedef long    nclong;         /* default, compatible type */
-diff -up hdf-4.2.4-snap8/mfhdf/ncgen/ncgen.l.ppc hdf-4.2.4-snap8/mfhdf/ncgen/ncgen.l
---- hdf-4.2.4-snap8/mfhdf/ncgen/ncgen.l.ppc	2010-01-17 21:24:51.000000000 -0700
-+++ hdf-4.2.4-snap8/mfhdf/ncgen/ncgen.l	2010-02-01 13:19:15.326387419 -0700
+diff -up hdf-4.2.7/mfhdf/ncgen/ncgen.l.ppc hdf-4.2.7/mfhdf/ncgen/ncgen.l
+--- hdf-4.2.7/mfhdf/ncgen/ncgen.l.ppc	2012-02-06 07:02:00.000000000 -0700
++++ hdf-4.2.7/mfhdf/ncgen/ncgen.l	2012-02-15 10:09:29.074578022 -0700
 @@ -134,7 +134,7 @@ FloatInf|Infinity|Inf	{    /* float miss
  		    yyerror(errstr);
  		}
  
--#if defined __alpha || (_MIPS_SZLONG == 64) || defined __ia64 || (defined __sun && defined _LP64) || defined AIX5L64 || defined __x86_64__
+-#if defined __alpha || (_MIPS_SZLONG == 64) || defined __ia64 || (defined __sun && defined _LP64) || defined AIX5L64 || defined __x86_64__ || __powerpc64__
 +#if defined __alpha || (_MIPS_SZLONG == 64) || defined __ia64 || (defined __sun && defined _LP64) || defined AIX5L64 || defined __x86_64__ || defined __powerpc64__
  		if (dd < INT_MIN  ||  dd > INT_MAX) 
  #else
