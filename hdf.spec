@@ -1,6 +1,6 @@
 Name: hdf
 Version: 4.2.7
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: A general purpose library and file format for storing scientific data
 License: BSD
 Group: System Environment/Libraries
@@ -10,6 +10,7 @@ Patch0: hdf-4.2.5-maxavailfiles.patch
 Patch1: hdf-ppc.patch
 Patch2: hdf-4.2.4-sparc.patch
 Patch3: hdf-4.2.4-s390.patch
+Patch4: hdf-4.2.7-arm.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires: flex byacc libjpeg-devel zlib-devel
 %if "%{?dist}" != ".el4"
@@ -46,6 +47,7 @@ HDF development headers and libraries.
 %patch1 -p1 -b .ppc
 %patch2 -p1 -b .sparc
 %patch3 -p1 -b .s390
+%patch4 -p1 -b .arm
 
 chmod a-x *hdf/*/*.c hdf/*/*.h
 # restore include file timestamps modified by patching
@@ -112,6 +114,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Mar 06 2012 DJ Delorie <dj@redhat.com> 4.2.7-2
+- Add patch for ARM support
+
 * Wed Feb 15 2012 Orion Poplawski <orion@cora.nwra.com> 4.2.7-1
 - Update to 4.2.7
 
