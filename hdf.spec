@@ -1,6 +1,6 @@
 Name: hdf
 Version: 4.2.8
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: A general purpose library and file format for storing scientific data
 License: BSD
 Group: System Environment/Libraries
@@ -114,6 +114,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Fri Dec 21 2012 Adam Tkac <atkac redhat com> - 4.2.8-2
+- rebuild against new libjpeg
+
 * Wed Aug 15 2012 Orion Poplawski <orion@cora.nwra.com> 4.2.8-1
 - Update to 4.2.8
 
