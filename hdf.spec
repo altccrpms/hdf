@@ -1,6 +1,6 @@
 Name: hdf
 Version: 4.2.8
-Release: 2%{?dist}
+Release: 3%{?dist}
 Summary: A general purpose library and file format for storing scientific data
 License: BSD
 Group: System Environment/Libraries
@@ -114,6 +114,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Fri Jan 18 2013 Adam Tkac <atkac redhat com> - 4.2.8-3
+- rebuild due to "jpeg8-ABI" feature drop
+
 * Fri Dec 21 2012 Adam Tkac <atkac redhat com> - 4.2.8-2
 - rebuild against new libjpeg
 
