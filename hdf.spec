@@ -11,6 +11,8 @@ Patch1: hdf-ppc.patch
 Patch2: hdf-4.2.4-sparc.patch
 Patch3: hdf-4.2.4-s390.patch
 Patch4: hdf-4.2.7-arm.patch
+# Add some missing declarations
+Patch5: hdf-declaration.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires: flex byacc libjpeg-devel zlib-devel
 %if "%{?dist}" != ".el4"
@@ -116,6 +118,7 @@ rm -rf $RPM_BUILD_ROOT
 %changelog
 * Fri Feb 15 2013 Orion Poplawski <orion@cora.nwra.com> 4.2.9-1
 - Update to 4.2.9
+- Add patch for some missing declarations
 
 * Thu Feb 14 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 4.2.8-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_19_Mass_Rebuild
