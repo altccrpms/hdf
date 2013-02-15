@@ -1,6 +1,6 @@
 Name: hdf
-Version: 4.2.8
-Release: 4%{?dist}
+Version: 4.2.9
+Release: 1%{?dist}
 Summary: A general purpose library and file format for storing scientific data
 License: BSD
 Group: System Environment/Libraries
@@ -114,6 +114,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Fri Feb 15 2013 Orion Poplawski <orion@cora.nwra.com> 4.2.9-1
+- Update to 4.2.9
+
 * Thu Feb 14 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 4.2.8-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_19_Mass_Rebuild
 
