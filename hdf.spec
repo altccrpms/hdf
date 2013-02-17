@@ -13,6 +13,8 @@ Patch3: hdf-4.2.4-s390.patch
 Patch4: hdf-4.2.7-arm.patch
 # Add some missing declarations
 Patch5: hdf-declaration.patch
+# Patch to fix integer wrapping in test
+Patch6: hdf-wrap.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires: flex byacc libjpeg-devel zlib-devel
 %if "%{?dist}" != ".el4"
@@ -50,6 +52,8 @@ HDF development headers and libraries.
 %patch2 -p1 -b .sparc
 %patch3 -p1 -b .s390
 %patch4 -p1 -b .arm
+%patch5 -p1 -b .declaration
+%patch6 -p1 -b .wrap
 
 chmod a-x *hdf/*/*.c hdf/*/*.h
 # restore include file timestamps modified by patching
@@ -119,6 +123,7 @@ rm -rf $RPM_BUILD_ROOT
 * Fri Feb 15 2013 Orion Poplawski <orion@cora.nwra.com> 4.2.9-1
 - Update to 4.2.9
 - Add patch for some missing declarations
+- Add patch to fix integer wrapping in test
 
 * Thu Feb 14 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 4.2.8-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_19_Mass_Rebuild
