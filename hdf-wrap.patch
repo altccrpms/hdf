@@ -1,6 +1,6 @@
 diff -up hdf-4.2.9/hdf/test/sdmms.c.wrap hdf-4.2.9/hdf/test/sdmms.c
 --- hdf-4.2.9/hdf/test/sdmms.c.wrap	2013-02-07 21:44:52.000000000 -0700
-+++ hdf-4.2.9/hdf/test/sdmms.c	2013-02-16 20:20:35.741870559 -0700
++++ hdf-4.2.9/hdf/test/sdmms.c	2013-02-16 20:33:39.118623828 -0700
 @@ -63,9 +63,10 @@ static int32 ical5;
  void
  test_sdmms(void)
@@ -8,7 +8,7 @@ diff -up hdf-4.2.9/hdf/test/sdmms.c.wrap hdf-4.2.9/hdf/test/sdmms.c
 -    int         i, j, err, err1, err2, ret;
 -    intn        rank;
 -    int32       dims[2];
-+    unsigned int i, j;
++    uint32       i, j;
 +    int          err, err1, err2, ret;
 +    intn         rank;
 +    int32        dims[2];
