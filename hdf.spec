@@ -1,6 +1,6 @@
 Name: hdf
 Version: 4.2.9
-Release: 2%{?dist}
+Release: 3%{?dist}
 Summary: A general purpose library and file format for storing scientific data
 License: BSD
 Group: System Environment/Libraries
@@ -100,7 +100,10 @@ mv h4config.h.tmp h4config.h
 popd
 
 %check
+# bugzilla #961007
+%ifnarch ppc %{power64}
 make check
+%endif
 
 
 %clean
@@ -120,6 +123,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Aug 13 2013 Karsten Hopp <karsten@redhat.com> 4.2.9-3
+- temporarily skip checks on ppc* (#961007)
+
 * Sat Aug 03 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 4.2.9-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
 
