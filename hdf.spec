@@ -1,6 +1,6 @@
 Name: hdf
 Version: 4.2.9
-Release: 3%{?dist}
+Release: 4%{?dist}
 Summary: A general purpose library and file format for storing scientific data
 License: BSD
 Group: System Environment/Libraries
@@ -15,6 +15,9 @@ Patch4: hdf-4.2.7-arm.patch
 Patch5: hdf-declaration.patch
 # Patch to fix integer wrapping in test
 Patch6: hdf-wrap.patch
+# Fix build with -Werror=format-security
+# https://bugzilla.redhat.com/show_bug.cgi?id=1037120
+Patch7: hdf-format.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires: flex byacc libjpeg-devel zlib-devel
 %if "%{?dist}" != ".el4"
@@ -54,6 +57,7 @@ HDF development headers and libraries.
 %patch4 -p1 -b .arm
 %patch5 -p1 -b .declaration
 %patch6 -p1 -b .wrap
+%patch7 -p1 -b .format
 
 chmod a-x *hdf/*/*.c hdf/*/*.h
 # restore include file timestamps modified by patching
@@ -123,6 +127,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sat Feb 1 2014 Orion Poplawski <orion@cora.nwra.com> 4.2.9-4
+- Fix build with -Werror=format-security (bug #1037120)
+
 * Tue Aug 13 2013 Karsten Hopp <karsten@redhat.com> 4.2.9-3
 - temporarily skip checks on ppc* (#961007)
 
