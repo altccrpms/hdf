@@ -1,7 +1,7 @@
-diff -up hdf-4.2.6/hdf/src/hdfi.h.s390 hdf-4.2.6/hdf/src/hdfi.h
---- hdf-4.2.6/hdf/src/hdfi.h.s390	2011-06-21 16:31:39.106504782 -0600
-+++ hdf-4.2.6/hdf/src/hdfi.h	2011-06-21 16:31:39.142504332 -0600
-@@ -78,6 +78,7 @@
+diff -up hdf-4.2.10/hdf/src/hdfi.h.s390 hdf-4.2.10/hdf/src/hdfi.h
+--- hdf-4.2.10/hdf/src/hdfi.h.s390	2014-02-14 09:20:40.521202091 -0700
++++ hdf-4.2.10/hdf/src/hdfi.h	2014-02-14 09:20:40.525202067 -0700
+@@ -77,6 +77,7 @@
  #define     DFMT_POWERPC64      0x1111
  #define     DFMT_LINUXPPC       0x1111
  #define     DFMT_LINUXSPARC     0x1111
@@ -9,7 +9,7 @@ diff -up hdf-4.2.6/hdf/src/hdfi.h.s390 hdf-4.2.6/hdf/src/hdfi.h
  
  /* I/O library constants */
  #define UNIXUNBUFIO 1
-@@ -1402,6 +1403,66 @@ typedef int               hdf_pint_t;   
+@@ -1126,6 +1127,66 @@ typedef int               hdf_pint_t;
  
  #endif /* Linux Sparc32/64 */
  
@@ -76,9 +76,9 @@ diff -up hdf-4.2.6/hdf/src/hdfi.h.s390 hdf-4.2.6/hdf/src/hdfi.h
  /*-----------------------------------------------------*/
  /* 64-bit Free BSD */
  
-diff -up hdf-4.2.6/mfhdf/fortran/config/jackets-linux.c.s390 hdf-4.2.6/mfhdf/fortran/config/jackets-linux.c
---- hdf-4.2.6/mfhdf/fortran/config/jackets-linux.c.s390	2011-06-21 16:31:39.080505105 -0600
-+++ hdf-4.2.6/mfhdf/fortran/config/jackets-linux.c	2011-06-21 16:31:39.149504243 -0600
+diff -up hdf-4.2.10/mfhdf/fortran/jackets.c.in.s390 hdf-4.2.10/mfhdf/fortran/jackets.c.in
+--- hdf-4.2.10/mfhdf/fortran/jackets.c.in.s390	2014-02-14 09:20:40.518202109 -0700
++++ hdf-4.2.10/mfhdf/fortran/jackets.c.in	2014-02-14 09:23:08.002375061 -0700
 @@ -34,7 +34,7 @@
  
  struct ncfils {			/* This will be a common block from Fortran */
@@ -97,7 +97,7 @@ diff -up hdf-4.2.6/mfhdf/fortran/config/jackets-linux.c.s390 hdf-4.2.6/mfhdf/for
      int ll;
  #else
      long ll;
-@@ -430,7 +430,7 @@ stoig(shorts, ints, dims, basis, ndims)
+@@ -420,7 +420,7 @@ stoig(shorts, ints, dims, basis, ndims)
  }
  #endif /* FORTRAN_HAS_NO_SHORT */
  
@@ -106,7 +106,7 @@ diff -up hdf-4.2.6/mfhdf/fortran/config/jackets-linux.c.s390 hdf-4.2.6/mfhdf/for
  /*
   * Convert multi-dimensional array of NCLONGs stored in ints to packed
   * array of longs, in malloc'ed space.  Returns pointer to longs or NULL
-@@ -916,7 +916,7 @@ nncvpt1(cdfid, varid, indices, value, rc
+@@ -908,7 +908,7 @@ nncvpt1(cdfid, varid, indices, value, rc
  	return;
      }				/* else */
  #endif				/* FORTRAN_HAS_NO_SHORT */
@@ -115,7 +115,7 @@ diff -up hdf-4.2.6/mfhdf/fortran/config/jackets-linux.c.s390 hdf-4.2.6/mfhdf/for
  #ifdef HDF
      if ((nc_type) datatype == NC_LONG && handle->file_type!=HDF_FILE) {
  	long          longs = *(int *)value;
-@@ -1030,7 +1030,7 @@ nncvpt(cdfid, varid, start, count, value
+@@ -1022,7 +1022,7 @@ nncvpt(cdfid, varid, start, count, value
  	return;
      }				/* else */
  #endif				/* FORTRAN_HAS_NO_SHORT */
@@ -124,7 +124,7 @@ diff -up hdf-4.2.6/mfhdf/fortran/config/jackets-linux.c.s390 hdf-4.2.6/mfhdf/for
  #ifdef HDF
      if ((nc_type) datatype == NC_LONG && handle->file_type!=HDF_FILE) {
  	long *longs = itol (value, ncount, ndims);
-@@ -1141,7 +1141,7 @@ nncvptg(cdfid, varid, start, count, stri
+@@ -1133,7 +1133,7 @@ nncvptg(cdfid, varid, start, count, stri
  	tmpbasis	= nctypelen(NC_LONG);
      else
  #endif
@@ -133,7 +133,7 @@ diff -up hdf-4.2.6/mfhdf/fortran/config/jackets-linux.c.s390 hdf-4.2.6/mfhdf/for
      if (datatype == NC_LONG)
  	tmpbasis	= sizeof(int);
      else
-@@ -1198,7 +1198,7 @@ nncvptg(cdfid, varid, start, count, stri
+@@ -1190,7 +1190,7 @@ nncvptg(cdfid, varid, start, count, stri
  	return;
      }				/* else */
  #endif				/* FORTRAN_HAS_NO_SHORT */
@@ -142,7 +142,7 @@ diff -up hdf-4.2.6/mfhdf/fortran/config/jackets-linux.c.s390 hdf-4.2.6/mfhdf/for
  #ifdef HDF
      if ((nc_type) datatype == NC_LONG && handle->file_type!=HDF_FILE) {
  	long *longs = itolg (value, ncount, nbasis, ndims);
-@@ -1334,7 +1334,7 @@ nncvgt1(cdfid, varid, indices, value, rc
+@@ -1326,7 +1326,7 @@ nncvgt1(cdfid, varid, indices, value, rc
  	return;
      }				/* else */
  #endif				/* FORTRAN_HAS_NO_SHORT */
@@ -151,7 +151,7 @@ diff -up hdf-4.2.6/mfhdf/fortran/config/jackets-linux.c.s390 hdf-4.2.6/mfhdf/for
  #ifdef HDF
      if ((nc_type) datatype == NC_LONG && handle->file_type!=HDF_FILE) {
  	long          longs;
-@@ -1476,7 +1476,7 @@ nncvgt(cdfid, varid, start, count, value
+@@ -1468,7 +1468,7 @@ nncvgt(cdfid, varid, start, count, value
  	return;
      }				/* else */
  #endif				/* FORTRAN_HAS_NO_SHORT */
@@ -160,7 +160,7 @@ diff -up hdf-4.2.6/mfhdf/fortran/config/jackets-linux.c.s390 hdf-4.2.6/mfhdf/for
  #ifdef HDF
      if ((nc_type) datatype == NC_LONG && handle->file_type!=HDF_FILE) {
  	long iocount = dimprod (ncount, ndims);	/* product of dimensions */
-@@ -1614,7 +1614,7 @@ nncvgtg(cdfid, varid, start, count, stri
+@@ -1606,7 +1606,7 @@ nncvgtg(cdfid, varid, start, count, stri
  	tmpbasis	= nctypelen(NC_LONG);
      else
  #endif
@@ -169,7 +169,7 @@ diff -up hdf-4.2.6/mfhdf/fortran/config/jackets-linux.c.s390 hdf-4.2.6/mfhdf/for
      if (datatype == NC_LONG)
  	tmpbasis	= sizeof(int);
      else
-@@ -1685,7 +1685,7 @@ nncvgtg(cdfid, varid, start, count, stri
+@@ -1677,7 +1677,7 @@ nncvgtg(cdfid, varid, start, count, stri
  	return;
      }				/* else */
  #endif				/* FORTRAN_HAS_NO_SHORT */
@@ -178,7 +178,7 @@ diff -up hdf-4.2.6/mfhdf/fortran/config/jackets-linux.c.s390 hdf-4.2.6/mfhdf/for
  #ifdef HDF
      if ((nc_type) datatype == NC_LONG && handle->file_type!=HDF_FILE) {
  	long iocount = dimprod (ncount, ndims);	/* product of dimensions */
-@@ -1851,7 +1851,7 @@ nncapt(cdfid, varid, attname, datatype, 
+@@ -1843,7 +1843,7 @@ nncapt(cdfid, varid, attname, datatype,
  	return;
      }				/* else */
  #endif				/* FORTRAN_HAS_NO_SHORT */
@@ -187,7 +187,7 @@ diff -up hdf-4.2.6/mfhdf/fortran/config/jackets-linux.c.s390 hdf-4.2.6/mfhdf/for
  #ifdef HDF
      if ((nc_type) *datatype == NC_LONG && handle->file_type!=HDF_FILE) {
  	long *longs = itol (value, attlen, 1);
-@@ -2016,7 +2016,7 @@ nncagt(cdfid, varid, attname, value, rco
+@@ -2008,7 +2008,7 @@ nncagt(cdfid, varid, attname, value, rco
  	return;
      }				/* else */
  #endif				/* FORTRAN_HAS_NO_SHORT */
@@ -196,79 +196,67 @@ diff -up hdf-4.2.6/mfhdf/fortran/config/jackets-linux.c.s390 hdf-4.2.6/mfhdf/for
  #ifdef HDF
      if ((nc_type) datatype == NC_LONG && handle->file_type!=HDF_FILE) {
  /* EIP  We need to use int buffer to read data in on the platforms where long is 8 bytes
-diff -up hdf-4.2.6/mfhdf/libsrc/array.c.s390 hdf-4.2.6/mfhdf/libsrc/array.c
---- hdf-4.2.6/mfhdf/libsrc/array.c.s390	2007-11-15 16:40:57.000000000 -0700
-+++ hdf-4.2.6/mfhdf/libsrc/array.c	2011-06-21 16:31:39.150504231 -0600
-@@ -622,7 +622,7 @@ xdr_NC_array(xdrs, app)
+diff -up hdf-4.2.10/mfhdf/libsrc/array.c.s390 hdf-4.2.10/mfhdf/libsrc/array.c
+--- hdf-4.2.10/mfhdf/libsrc/array.c.s390	2014-02-14 09:20:50.693141452 -0700
++++ hdf-4.2.10/mfhdf/libsrc/array.c	2014-02-14 09:26:40.897231851 -0700
+@@ -620,7 +620,7 @@ xdr_NC_array(xdrs, app)
+ 		xdr_NC_fnct = xdr_shorts ;
+ 		goto func ;
  	case NC_LONG :
- #if defined _CRAYMPP
- 		xdr_NC_fnct = xdr_short;
--#elif defined __alpha || (_MIPS_SZLONG == 64) || defined __ia64 || (defined __sun && defined _LP64) || defined AIX5L64 || defined __x86_64__ || defined __powerpc64__ 
-+#elif defined __alpha || (_MIPS_SZLONG == 64) || defined __ia64 || (defined __sun && defined _LP64) || defined AIX5L64 || defined __x86_64__ || defined __powerpc64__ || defined __s390x__
+-#if defined __alpha || (_MIPS_SZLONG == 64) || defined __ia64 || (defined __sun && defined _LP64) || defined AIX5L64 || defined __x86_64__ || defined __powerpc64__ 
++#if defined __alpha || (_MIPS_SZLONG == 64) || defined __ia64 || (defined __sun && defined _LP64) || defined AIX5L64 || defined __x86_64__ || defined __powerpc64__ || defined __s390x__
  		xdr_NC_fnct = xdr_int ;
  #else
  		xdr_NC_fnct = xdr_long ;
-diff -up hdf-4.2.6/mfhdf/libsrc/cdf.c.s390 hdf-4.2.6/mfhdf/libsrc/cdf.c
---- hdf-4.2.6/mfhdf/libsrc/cdf.c.s390	2011-04-13 12:51:13.000000000 -0600
-+++ hdf-4.2.6/mfhdf/libsrc/cdf.c	2011-06-21 16:31:39.155504169 -0600
-@@ -3660,7 +3660,7 @@ NC_var *vp ;
+diff -up hdf-4.2.10/mfhdf/libsrc/cdf.c.s390 hdf-4.2.10/mfhdf/libsrc/cdf.c
+--- hdf-4.2.10/mfhdf/libsrc/cdf.c.s390	2014-02-14 09:20:50.694141447 -0700
++++ hdf-4.2.10/mfhdf/libsrc/cdf.c	2014-02-14 09:27:33.826948531 -0700
+@@ -3662,7 +3662,7 @@ NC_var *vp ;
+         break ;
+     case NC_LONG :
          alen /= 4 ;
- #if defined _CRAYMPP
-         xdr_NC_fnct = xdr_short;
--#elif defined __alpha || (_MIPS_SZLONG == 64) || defined __ia64 || (defined __sun && defined _LP64) || defined AIX5L64 || defined __x86_64__ || defined __powerpc64__ 
-+#elif defined __alpha || (_MIPS_SZLONG == 64) || defined __ia64 || (defined __sun && defined _LP64) || defined AIX5L64 || defined __x86_64__ || defined __powerpc64__ || defined __s390x__
+-#if defined __alpha || (_MIPS_SZLONG == 64) || defined __ia64 || (defined __sun && defined _LP64) || defined AIX5L64 || defined __x86_64__ || defined __powerpc64__ 
++#if defined __alpha || (_MIPS_SZLONG == 64) || defined __ia64 || (defined __sun && defined _LP64) || defined AIX5L64 || defined __x86_64__ || defined __powerpc64__ || defined __s390x__
          xdr_NC_fnct = xdr_int ;
  #else
          xdr_NC_fnct = xdr_long ;
-diff -up hdf-4.2.6/mfhdf/libsrc/config/netcdf-linux.h.s390 hdf-4.2.6/mfhdf/libsrc/config/netcdf-linux.h
---- hdf-4.2.6/mfhdf/libsrc/config/netcdf-linux.h.s390	2011-04-13 12:51:13.000000000 -0600
-+++ hdf-4.2.6/mfhdf/libsrc/config/netcdf-linux.h	2011-06-21 16:33:03.376451262 -0600
-@@ -300,7 +300,7 @@ typedef double        ncdouble;
+diff -up hdf-4.2.10/mfhdf/libsrc/netcdf.h.in.s390 hdf-4.2.10/mfhdf/libsrc/netcdf.h.in
+--- hdf-4.2.10/mfhdf/libsrc/netcdf.h.in.s390	2014-02-14 09:20:51.260138101 -0700
++++ hdf-4.2.10/mfhdf/libsrc/netcdf.h.in	2014-02-14 09:27:06.286095942 -0700
+@@ -293,7 +293,7 @@ typedef double        ncdouble;
+ /* 
+  * Variables/attributes of type NC_LONG should use the C type 'nclong'
   */
- #if defined _CRAYMPP
- typedef short	nclong;
--#elif defined __alpha || (_MIPS_SZLONG == 64) || defined __ia64 || (defined __sun && defined _LP64) || defined AIX5L64 || defined __x86_64__ || defined __powerpc64__
-+#elif defined __alpha || (_MIPS_SZLONG == 64) || defined __ia64 || (defined __sun && defined _LP64) || defined AIX5L64 || defined __x86_64__ || defined __powerpc64__ || defined __s390x__
- 
- typedef int     nclong;   
- #else
-diff -up hdf-4.2.6/mfhdf/libsrc/netcdf.h.in.s390 hdf-4.2.6/mfhdf/libsrc/netcdf.h.in
---- hdf-4.2.6/mfhdf/libsrc/netcdf.h.in.s390	2011-06-21 16:31:39.094504932 -0600
-+++ hdf-4.2.6/mfhdf/libsrc/netcdf.h.in	2011-06-21 16:31:39.159504118 -0600
-@@ -295,7 +295,7 @@ typedef double        ncdouble;
-  */
- #if defined _CRAYMPP
- typedef short	nclong;
--#elif defined __alpha || (_MIPS_SZLONG == 64) || defined IA64 || (defined __sun__ && defined _LP64) || defined AIX5L64 || defined __powerpc64__
-+#elif defined __alpha || (_MIPS_SZLONG == 64) || defined IA64 || (defined __sun__ && defined _LP64) || defined AIX5L64 || defined __powerpc64__ || defined __s390x__
- typedef int     nclong;   
- #else
- typedef long    nclong;         /* default, compatible type */
-diff -up hdf-4.2.6/mfhdf/libsrc/putget.c.s390 hdf-4.2.6/mfhdf/libsrc/putget.c
---- hdf-4.2.6/mfhdf/libsrc/putget.c.s390	2009-09-07 15:02:22.000000000 -0600
-+++ hdf-4.2.6/mfhdf/libsrc/putget.c	2011-06-21 16:31:39.162504082 -0600
-@@ -652,7 +652,7 @@ Void *values ;
+-#if defined __alpha || (_MIPS_SZLONG == 64) || defined __ia64 || (defined __sun && defined _LP64) || defined AIX5L64 || defined __x86_64__ || defined __powerpc64__
++#if defined __alpha || (_MIPS_SZLONG == 64) || defined __ia64 || (defined __sun && defined _LP64) || defined AIX5L64 || defined __x86_64__ || defined __powerpc64__ || defined __s390x__
+ /*
+  * LP64 (also known as 4/8/8) denotes long and pointer as 64 bit types.
+  * http://www.unix.org/version2/whatsnew/lp64_wp.html
+diff -up hdf-4.2.10/mfhdf/libsrc/putget.c.s390 hdf-4.2.10/mfhdf/libsrc/putget.c
+--- hdf-4.2.10/mfhdf/libsrc/putget.c.s390	2014-02-14 09:20:51.261138095 -0700
++++ hdf-4.2.10/mfhdf/libsrc/putget.c	2014-02-14 09:24:03.676074745 -0700
+@@ -664,7 +664,7 @@ Void *values ;
+ 	case NC_SHORT :
+ 		return( xdr_NCvshort(xdrs, (unsigned)rem/2, (short *)values) ) ;
  	case NC_LONG :
- #if defined _CRAYMPP
- 		return( xdr_short(xdrs, (nclong *)values) ) ;
--#elif defined __alpha || (_MIPS_SZLONG == 64) || defined __ia64 || (defined __sun && defined _LP64) || defined AIX5L64 || defined __x86_64__ || defined __powerpc64__ 
-+#elif defined __alpha || (_MIPS_SZLONG == 64) || defined __ia64 || (defined __sun && defined _LP64) || defined AIX5L64 || defined __x86_64__ || defined __powerpc64__ || defined __s390x__
+-#if defined __alpha || (_MIPS_SZLONG == 64) || defined __ia64 || (defined __sun && defined _LP64) || defined AIX5L64 || defined __x86_64__ || defined __powerpc64__ 
++#if defined __alpha || (_MIPS_SZLONG == 64) || defined __ia64 || (defined __sun && defined _LP64) || defined AIX5L64 || defined __x86_64__ || defined __powerpc64__ || defined __s390x__
  		return( xdr_int(xdrs, (nclong *)values) ) ;
  #else
  		return( xdr_long(xdrs, (nclong *)values) ) ;
-@@ -1966,7 +1966,7 @@ Void *values ;
+@@ -1975,7 +1975,7 @@ Void *values ;
+ 		} /* else */
+ 		return(TRUE) ;
  	case NC_LONG :
- #if defined _CRAYMPP
-                 xdr_NC_fnct = xdr_short;
--#elif defined __alpha || (_MIPS_SZLONG == 64) || defined __ia64 || (defined __sun && defined _LP64) || defined AIX5L64 || defined __x86_64__ || defined __powerpc64__
-+#elif defined __alpha || (_MIPS_SZLONG == 64) || defined __ia64 || (defined __sun && defined _LP64) || defined AIX5L64 || defined __x86_64__ || defined __powerpc64__ || defined __s390x__
+-#if defined __alpha || (_MIPS_SZLONG == 64) || defined __ia64 || (defined __sun && defined _LP64) || defined AIX5L64 || defined __x86_64__ || defined __powerpc64__
++#if defined __alpha || (_MIPS_SZLONG == 64) || defined __ia64 || (defined __sun && defined _LP64) || defined AIX5L64 || defined __x86_64__ || defined __powerpc64__ || defined __s390x__
  		xdr_NC_fnct = xdr_int ;
  #else
  		xdr_NC_fnct = xdr_long ;
-diff -up hdf-4.2.6/mfhdf/libsrc/xdrposix.c.s390 hdf-4.2.6/mfhdf/libsrc/xdrposix.c
---- hdf-4.2.6/mfhdf/libsrc/xdrposix.c.s390	2009-03-03 15:58:27.000000000 -0700
-+++ hdf-4.2.6/mfhdf/libsrc/xdrposix.c	2011-06-21 16:31:39.165504044 -0600
-@@ -283,7 +283,7 @@ int nbytes;
+diff -up hdf-4.2.10/mfhdf/libsrc/xdrposix.c.s390 hdf-4.2.10/mfhdf/libsrc/xdrposix.c
+--- hdf-4.2.10/mfhdf/libsrc/xdrposix.c.s390	2014-02-09 19:28:45.000000000 -0700
++++ hdf-4.2.10/mfhdf/libsrc/xdrposix.c	2014-02-14 09:26:17.898354986 -0700
+@@ -250,7 +250,7 @@ int nbytes;
  
  static bool_t   xdrposix_getlong();
  static bool_t   xdrposix_putlong();
@@ -277,7 +265,7 @@ diff -up hdf-4.2.6/mfhdf/libsrc/xdrposix.c.s390 hdf-4.2.6/mfhdf/libsrc/xdrposix.
  static bool_t   xdrposix_getint();
  static bool_t   xdrposix_putint();
  #endif
-@@ -300,7 +300,7 @@ static long *    xdrposix_inline();
+@@ -264,7 +264,7 @@ static long *    xdrposix_inline();
  #if (defined __sun && defined _LP64)
  static rpc_inline_t *    xdrposix_inline();
  #else
@@ -286,7 +274,7 @@ diff -up hdf-4.2.6/mfhdf/libsrc/xdrposix.c.s390 hdf-4.2.6/mfhdf/libsrc/xdrposix.
  static int32_t *    xdrposix_inline();
  #else
  #if (defined __alpha )
-@@ -331,9 +331,9 @@ static struct xdr_ops   xdrposix_ops = {
+@@ -294,9 +294,9 @@ static struct xdr_ops   xdrposix_ops = {
      xdrposix_getpos,    /* get offset in the stream */
      xdrposix_setpos,    /* set offset in the stream */
      xdrposix_inline,    /* prime stream for inline macros */
@@ -298,25 +286,25 @@ diff -up hdf-4.2.6/mfhdf/libsrc/xdrposix.c.s390 hdf-4.2.6/mfhdf/libsrc/xdrposix.
      NULL,               /* no xdr_control function defined */
  #endif 
      /* Solaris 64-bit (arch=v9 and arch=amd64) has 64 bits long and 32 bits int. */
-@@ -468,7 +468,7 @@ xdrposix_getlong(xdrs, lp)
+@@ -431,7 +431,7 @@ xdrposix_getlong(xdrs, lp)
  #endif
  {
      unsigned char *up = (unsigned char *)lp ;
--#if (defined CRAY || defined AIX5L64 || defined __powerpc64__ || (defined __hpux && __LP64__))  
-+#if (defined CRAY || defined AIX5L64 || defined __powerpc64__ || defined __s390x__ || (defined __hpux && __LP64__))  
+-#if (defined AIX5L64 || defined __powerpc64__ || (defined __hpux && __LP64__))  
++#if (defined AIX5L64 || defined __powerpc64__ || defined __s390x__ || (defined __hpux && __LP64__))  
      *lp = 0 ;
      up += (sizeof(long) - 4) ;
  #endif
-@@ -495,7 +495,7 @@ xdrposix_putlong(xdrs, lp)
+@@ -458,7 +458,7 @@ xdrposix_putlong(xdrs, lp)
      netlong mycopy = htonl(*lp);
      up = (unsigned char *)&mycopy;
  #endif
--#if (defined CRAY || defined AIX5L64  || defined __powerpc64__ || (defined __hpux && __LP64__))
-+#if (defined CRAY || defined AIX5L64  || defined __powerpc64__ || defined __s390x__ || (defined __hpux && __LP64__))
+-#if (defined AIX5L64  || defined __powerpc64__ || (defined __hpux && __LP64__))
++#if (defined AIX5L64  || defined __powerpc64__ || defined __s390x__ || (defined __hpux && __LP64__))
      up += (sizeof(long) - 4) ;
  #endif
  
-@@ -592,7 +592,7 @@ static rpc_inline_t *
+@@ -552,7 +552,7 @@ static rpc_inline_t *
  #if (defined  __alpha)
  static int* 
  #else
@@ -325,7 +313,7 @@ diff -up hdf-4.2.6/mfhdf/libsrc/xdrposix.c.s390 hdf-4.2.6/mfhdf/libsrc/xdrposix.
  static int32_t * 
  #else
  static netlong * 
-@@ -621,7 +621,7 @@ int 
+@@ -580,7 +580,7 @@ int
      return (NULL);
  }
  
@@ -334,15 +322,15 @@ diff -up hdf-4.2.6/mfhdf/libsrc/xdrposix.c.s390 hdf-4.2.6/mfhdf/libsrc/xdrposix.
  
  static bool_t
  xdrposix_getint(xdrs, lp)
-diff -up hdf-4.2.6/mfhdf/ncgen/ncgen.l.s390 hdf-4.2.6/mfhdf/ncgen/ncgen.l
---- hdf-4.2.6/mfhdf/ncgen/ncgen.l.s390	2011-06-21 16:31:39.096504907 -0600
-+++ hdf-4.2.6/mfhdf/ncgen/ncgen.l	2011-06-21 16:31:39.166504031 -0600
-@@ -134,7 +134,7 @@ FloatInf|Infinity|Inf	{    /* float miss
+diff -up hdf-4.2.10/mfhdf/ncgen/ncgen.l.s390 hdf-4.2.10/mfhdf/ncgen/ncgen.l
+--- hdf-4.2.10/mfhdf/ncgen/ncgen.l.s390	2014-02-14 09:20:51.262138089 -0700
++++ hdf-4.2.10/mfhdf/ncgen/ncgen.l	2014-02-14 09:27:53.015845830 -0700
+@@ -113,7 +113,7 @@ FloatInf|Infinity|Inf	{    /* float miss
  		    yyerror(errstr);
  		}
  
--#if defined __alpha || (_MIPS_SZLONG == 64) || defined __ia64 || (defined __sun && defined _LP64) || defined AIX5L64 || defined __x86_64__ || defined __powerpc64__
-+#if defined __alpha || (_MIPS_SZLONG == 64) || defined __ia64 || (defined __sun && defined _LP64) || defined AIX5L64 || defined __x86_64__ || defined __powerpc64__ || defined __s390x__
+-#if defined __alpha || (_MIPS_SZLONG == 64) || defined __ia64 || (defined __sun && defined _LP64) || defined AIX5L64 || defined __x86_64__ || __powerpc64__
++#if defined __alpha || (_MIPS_SZLONG == 64) || defined __ia64 || (defined __sun && defined _LP64) || defined AIX5L64 || defined __x86_64__ || __powerpc64__ || defined __s390x__
  		if (dd < INT_MIN  ||  dd > INT_MAX) 
  #else
- #if defined (_CRAYMPP)
+ 		if (dd < LONG_MIN  ||  dd > LONG_MAX) 

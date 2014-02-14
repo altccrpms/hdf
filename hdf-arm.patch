@@ -1,19 +1,19 @@
-diff -r -U 3 -p hdf-4.2.7.orig/hdf/src/hconv.h hdf-4.2.7/hdf/src/hconv.h
---- hdf-4.2.7.orig/hdf/src/hconv.h	2012-02-06 09:02:43.000000000 -0500
-+++ hdf-4.2.7/hdf/src/hconv.h	2012-03-07 01:58:21.713088567 -0500
-@@ -63,7 +63,7 @@
+diff -up hdf-4.2.10/hdf/src/hconv.h.arm hdf-4.2.10/hdf/src/hconv.h
+--- hdf-4.2.10/hdf/src/hconv.h.arm	2014-02-14 09:28:56.692514796 -0700
++++ hdf-4.2.10/hdf/src/hconv.h	2014-02-14 09:30:03.882212944 -0700
+@@ -59,7 +59,7 @@
  /* CONSTANT DEFINITIONS                                                      */
  /*****************************************************************************/
  /* Generally Big-Endian machines */
--#if !defined(VMS) && !defined(INTEL86) && !defined(MIPSEL) && !defined(DEC_ALPHA) && !defined(I860) && !defined(SUN386) && !(defined(__ia64) && !(defined(hpux) || defined(__hpux))) && !defined(__x86_64__)
-+#if !defined(VMS) && !defined(INTEL86) && !defined(MIPSEL) && !defined(DEC_ALPHA) && !defined(I860) && !defined(SUN386) && !(defined(__ia64) && !(defined(hpux) || defined(__hpux))) && !defined(__x86_64__) && !defined(__arm__)
- #   if !defined(UNICOS)
+-#if !defined(INTEL86) && !defined(MIPSEL) && !defined(DEC_ALPHA) && !defined(I860) && !defined(SUN386) && !(defined(__ia64) && !(defined(hpux) || defined(__hpux))) && !defined(__x86_64__)
++#if !defined(INTEL86) && !defined(MIPSEL) && !defined(DEC_ALPHA) && !defined(I860) && !defined(SUN386) && !(defined(__ia64) && !(defined(hpux) || defined(__hpux))) && !defined(__x86_64__) && !defined(__arm__)
  #       define UI8_IN     DFKnb1b   /* Unsigned Integer, 8 bits */
  #       define UI8_OUT    DFKnb1b
-diff -r -U 3 -p hdf-4.2.7.orig/hdf/src/hdfi.h hdf-4.2.7/hdf/src/hdfi.h
---- hdf-4.2.7.orig/hdf/src/hdfi.h	2012-02-06 09:02:43.000000000 -0500
-+++ hdf-4.2.7/hdf/src/hdfi.h	2012-03-06 23:12:43.941269780 -0500
-@@ -79,6 +79,7 @@
+ #       define SI16_IN    DFKnb2b   /* S = Signed */
+diff -up hdf-4.2.10/hdf/src/hdfi.h.arm hdf-4.2.10/hdf/src/hdfi.h
+--- hdf-4.2.10/hdf/src/hdfi.h.arm	2014-02-14 09:28:56.685514824 -0700
++++ hdf-4.2.10/hdf/src/hdfi.h	2014-02-14 09:28:56.693514792 -0700
+@@ -78,6 +78,7 @@
  #define     DFMT_LINUXPPC       0x1111
  #define     DFMT_LINUXSPARC     0x1111
  #define     DFMT_LINUX390       0x1111
@@ -21,7 +21,7 @@ diff -r -U 3 -p hdf-4.2.7.orig/hdf/src/hdfi.h hdf-4.2.7/hdf/src/hdfi.h
  
  /* I/O library constants */
  #define UNIXUNBUFIO 1
-@@ -1463,6 +1464,57 @@ typedef int               hdf_pint_t;
+@@ -1187,6 +1188,57 @@ typedef int               hdf_pint_t;
  
  #endif /* Linux s390/s390x */
  

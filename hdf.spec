@@ -1,6 +1,6 @@
 Name: hdf
-Version: 4.2.9
-Release: 4%{?dist}
+Version: 4.2.10
+Release: 1%{?dist}
 Summary: A general purpose library and file format for storing scientific data
 License: BSD
 Group: System Environment/Libraries
@@ -9,16 +9,18 @@ Source0: ftp://ftp.hdfgroup.org/HDF/HDF_Current/src/%{name}-%{version}.tar.bz2
 Patch0: hdf-4.2.5-maxavailfiles.patch
 Patch1: hdf-ppc.patch
 Patch2: hdf-4.2.4-sparc.patch
-Patch3: hdf-4.2.4-s390.patch
-Patch4: hdf-4.2.7-arm.patch
-# Add some missing declarations
-Patch5: hdf-declaration.patch
-# Patch to fix integer wrapping in test
-Patch6: hdf-wrap.patch
+Patch3: hdf-s390.patch
+Patch4: hdf-arm.patch
+# Support DESTDIR in install-examples
+Patch5: hdf-destdir.patch
+# Install examples into the right location
+Patch6: hdf-examplesdir.patch
 # Fix build with -Werror=format-security
 # https://bugzilla.redhat.com/show_bug.cgi?id=1037120
 Patch7: hdf-format.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+# For destdir/examplesdir patches
+BuildRequires: automake libtool
 BuildRequires: flex byacc libjpeg-devel zlib-devel
 %if "%{?dist}" != ".el4"
 BuildRequires: gcc-gfortran
@@ -55,14 +57,15 @@ HDF development headers and libraries.
 %patch2 -p1 -b .sparc
 %patch3 -p1 -b .s390
 %patch4 -p1 -b .arm
-%patch5 -p1 -b .declaration
-%patch6 -p1 -b .wrap
+%patch5 -p1 -b .destdir
+%patch6 -p1 -b .examplesdir
 %patch7 -p1 -b .format
+# For destdir/examplesdir patches
+autoreconf -i
 
 chmod a-x *hdf/*/*.c hdf/*/*.h
 # restore include file timestamps modified by patching
 touch -c -r ./hdf/src/hdfi.h.ppc ./hdf/src/hdfi.h
-touch -c -r ./mfhdf/libsrc/config/netcdf-linux.h.s390 ./mfhdf/libsrc/config/netcdf-linux.h
 
 
 %build
@@ -75,11 +78,11 @@ export FFLAGS="$RPM_OPT_FLAGS -fPIC -ffixed-line-length-none"
 
 make
 # correct the timestamps based on files used to generate the header files
-touch -c -r ./mfhdf/fortran/config/netcdf-linux.inc mfhdf/fortran/netcdf.inc
 touch -c -r hdf/src/hdf.inc hdf/src/hdf.f90
 touch -c -r hdf/src/dffunc.inc hdf/src/dffunc.f90
 touch -c -r mfhdf/fortran/mffunc.inc mfhdf/fortran/mffunc.f90
 # netcdf fortran include need same treatement, but they are not shipped
+
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -103,6 +106,7 @@ touch -c -r h4config.h h4config.h.tmp
 mv h4config.h.tmp h4config.h
 popd
 
+
 %check
 # bugzilla #961007
 %ifnarch ppc %{power64}
@@ -117,6 +121,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-,root,root,0755)
 %doc COPYING MANIFEST README.txt release_notes/*.txt
+%exclude %{_defaultdocdir}/%{name}/examples
 %{_bindir}/*
 %{_mandir}/man1/*.gz
 
@@ -124,9 +129,15 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root,0755)
 %{_includedir}/%{name}/
 %{_libdir}/%{name}/
+%{_defaultdocdir}/%{name}/examples
 
 
 %changelog
+* Fri Feb 14 2014 Orion Poplawski <orion@cora.nwra.com> 4.2.10-1
+- Update to 4.2.10
+- Rebase arm, ppc, and s390 patches
+- Add destdir, examplesdir patches to fix installation of examples
+
 * Sat Feb 1 2014 Orion Poplawski <orion@cora.nwra.com> 4.2.9-4
 - Fix build with -Werror=format-security (bug #1037120)
 
