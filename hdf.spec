@@ -1,6 +1,6 @@
 Name: hdf
 Version: 4.2.10
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: A general purpose library and file format for storing scientific data
 License: BSD
 Group: System Environment/Libraries
@@ -108,10 +108,7 @@ popd
 
 
 %check
-# bugzilla #961007
-%ifnarch ppc %{power64}
 make check
-%endif
 
 
 %clean
@@ -133,6 +130,10 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Thu May 22 2014 Jakub Čajka <jcajka@redhat.com> 4.2.10-2
+- Fixed build/tests on s390x
+- Tests enabled on ppc
+
 * Fri Feb 14 2014 Orion Poplawski <orion@cora.nwra.com> 4.2.10-1
 - Update to 4.2.10
 - Rebase arm, ppc, and s390 patches

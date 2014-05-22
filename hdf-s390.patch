@@ -334,3 +334,15 @@ diff -up hdf-4.2.10/mfhdf/ncgen/ncgen.l.s390 hdf-4.2.10/mfhdf/ncgen/ncgen.l
  		if (dd < INT_MIN  ||  dd > INT_MAX) 
  #else
  		if (dd < LONG_MIN  ||  dd > LONG_MAX) 
+diff -up hdf-4.2.10/mfhdf/ncgen/ncgenyy.c.s390 hdf-4.2.10/mfhdf/ncgen/ncgenyy.c
+--- hdf-4.2.10/mfhdf/ncgen/ncgenyy.c.s390	2014-05-22 08:33:21.700132543 -0400
++++ hdf-4.2.10/mfhdf/ncgen/ncgenyy.c	2014-05-22 08:33:50.990132543 -0400
+@@ -989,7 +989,7 @@ YY_RULE_SETUP
+ 		    yyerror(errstr);
+ 		}
+ 
+-#if defined __alpha || (_MIPS_SZLONG == 64) || defined __ia64 || (defined __sun && defined _LP64) || defined AIX5L64 || defined __x86_64__ || __powerpc64__
++#if defined __alpha || (_MIPS_SZLONG == 64) || defined __ia64 || (defined __sun && defined _LP64) || defined AIX5L64 || defined __x86_64__ || __powerpc64__ || __s390x__
+ 		if (dd < INT_MIN  ||  dd > INT_MAX) 
+ #else
+ 		if (dd < LONG_MIN  ||  dd > LONG_MAX) 
