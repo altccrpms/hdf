@@ -1,6 +1,6 @@
 Name: hdf
 Version: 4.2.10
-Release: 3%{?dist}
+Release: 4%{?dist}
 Summary: A general purpose library and file format for storing scientific data
 License: BSD
 Group: System Environment/Libraries
@@ -18,6 +18,9 @@ Patch6: hdf-examplesdir.patch
 # Fix build with -Werror=format-security
 # https://bugzilla.redhat.com/show_bug.cgi?id=1037120
 Patch7: hdf-format.patch
+# Add AArch64 definitions
+Patch8: hdf-4.2.10-aarch64.patch
+
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 # For destdir/examplesdir patches
 BuildRequires: automake libtool
@@ -60,6 +63,7 @@ HDF development headers and libraries.
 %patch5 -p1 -b .destdir
 %patch6 -p1 -b .examplesdir
 %patch7 -p1 -b .format
+%patch8 -p1 -b .aarch64
 # For destdir/examplesdir patches
 autoreconf -i
 
@@ -130,6 +134,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Jun 24 2014 Marcin Juszkiewicz <mjuszkiewicz@redhat.com> 4.2.10-4
+- Add AArch64 support.
+
 * Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 4.2.10-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
 
