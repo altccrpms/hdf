@@ -64,8 +64,6 @@ HDF development headers and libraries.
 %patch6 -p1 -b .examplesdir
 %patch7 -p1 -b .format
 %patch8 -p1 -b .aarch64
-# For destdir/examplesdir patches
-autoreconf -i
 
 chmod a-x *hdf/*/*.c hdf/*/*.h
 # restore include file timestamps modified by patching
@@ -73,6 +71,8 @@ touch -c -r ./hdf/src/hdfi.h.ppc ./hdf/src/hdfi.h
 
 
 %build
+# For destdir/examplesdir patches
+autoreconf -vif
 # avoid upstream compiler flags settings
 rm config/*linux-gnu
 export CFLAGS="$RPM_OPT_FLAGS -fPIC"
