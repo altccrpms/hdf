@@ -134,7 +134,7 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
-* Wed Jun 24 2014 Marcin Juszkiewicz <mjuszkiewicz@redhat.com> 4.2.10-4
+* Wed Jun 25 2014 Marcin Juszkiewicz <mjuszkiewicz@redhat.com> 4.2.10-4
 - Add AArch64 support.
 
 * Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 4.2.10-3
