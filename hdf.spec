@@ -1,6 +1,6 @@
 Name: hdf
 Version: 4.2.10
-Release: 5%{?dist}
+Release: 6%{?dist}
 Summary: A general purpose library and file format for storing scientific data
 License: BSD
 Group: System Environment/Libraries
@@ -20,6 +20,9 @@ Patch6: hdf-examplesdir.patch
 Patch7: hdf-format.patch
 # Add AArch64 definitions
 Patch8: hdf-4.2.10-aarch64.patch
+# ppc64le support
+# https://bugzilla.redhat.com/show_bug.cgi?id=1134385
+Patch9: hdf-ppc64le.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 # For destdir/examplesdir patches
@@ -64,6 +67,7 @@ HDF development headers and libraries.
 %patch6 -p1 -b .examplesdir
 %patch7 -p1 -b .format
 %patch8 -p1 -b .aarch64
+%patch9 -p1 -b .ppc64le
 
 chmod a-x *hdf/*/*.c hdf/*/*.h
 # restore include file timestamps modified by patching
@@ -134,6 +138,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Sep 3 2014 Orion Poplawski <orion@cora.nwra.com> - 4.2.10-6
+- Add initial attempt at ppc64le support (bug #1134385)
+
 * Sat Aug 16 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 4.2.10-5
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_22_Mass_Rebuild
 
