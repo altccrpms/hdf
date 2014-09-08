@@ -1,6 +1,6 @@
 Name: hdf
 Version: 4.2.10
-Release: 6%{?dist}
+Release: 7%{?dist}
 Summary: A general purpose library and file format for storing scientific data
 License: BSD
 Group: System Environment/Libraries
@@ -116,13 +116,7 @@ popd
 
 
 %check
-# Tests are failing on ppc64le for some reason
-# https://bugzilla.redhat.com/show_bug.cgi?id=1134385
-%ifarch ppc64le
-make check || :
-%else
 make check
-%endif
 
 
 %clean
@@ -144,6 +138,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon Sep 8 2014 Orion Poplawski <orion@cora.nwra.com> - 4.2.10-7
+- Updated patch for ppc64le support (bug #1134385)
+
 * Wed Sep 3 2014 Orion Poplawski <orion@cora.nwra.com> - 4.2.10-6
 - Add initial attempt at ppc64le support (bug #1134385)
 
