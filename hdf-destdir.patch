@@ -1,17 +1,21 @@
-diff -up hdf-4.2.10/config/examples.am.destdir hdf-4.2.10/config/examples.am
---- hdf-4.2.10/config/examples.am.destdir	2014-02-09 19:28:50.000000000 -0700
-+++ hdf-4.2.10/config/examples.am	2014-02-14 10:02:35.039386643 -0700
-@@ -45,7 +45,7 @@ CLEANFILES=$(EXAMPLE_PROG)
+diff -up hdf-4.2.11/config/examples.am.destdir hdf-4.2.11/config/examples.am
+--- hdf-4.2.11/config/examples.am.destdir	2015-02-09 09:43:05.000000000 -0700
++++ hdf-4.2.11/config/examples.am	2015-02-13 13:24:09.008230956 -0700
+@@ -44,7 +44,7 @@ CHECK_CLEANFILES+= *.hdf
+ CLEANFILES=$(EXAMPLE_PROG)
  
  # How to create EXAMPLEDIR if it doesn't already exist
- $(EXAMPLEDIR):
--	mkdir -p $@
-+	mkdir -p $(DESTDIR)$@
+-$(EXAMPLEDIR):
++$(DESTDIR)$(EXAMPLEDIR):
+ 	mkdir -p $@
  
  # Install and uninstall rules.  We install the source files, not the
- # example programs themselves.
-@@ -57,39 +57,39 @@ uninstall-local:
- install-examples: $(EXAMPLEDIR) 
+@@ -54,42 +54,42 @@ install-data-local:
+ uninstall-local:
+ 	@$(MAKE) $(AM_MAKEFLAGS) uninstall-examples
+ 
+-install-examples: $(EXAMPLEDIR) 
++install-examples: $(DESTDIR)$(EXAMPLEDIR) 
  	@for f in X $(INSTALL_FILES); do                                     \
  	  if test $$f != X; then                                             \
 -	    (set -x; $(INSTALL) $(srcdir)/$$f $(EXAMPLEDIR)/. || exit 1);    \

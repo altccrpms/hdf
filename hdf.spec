@@ -1,6 +1,6 @@
 Name: hdf
-Version: 4.2.10
-Release: 7%{?dist}
+Version: 4.2.11
+Release: 1%{?dist}
 Summary: A general purpose library and file format for storing scientific data
 License: BSD
 Group: System Environment/Libraries
@@ -15,9 +15,6 @@ Patch4: hdf-arm.patch
 Patch5: hdf-destdir.patch
 # Install examples into the right location
 Patch6: hdf-examplesdir.patch
-# Fix build with -Werror=format-security
-# https://bugzilla.redhat.com/show_bug.cgi?id=1037120
-Patch7: hdf-format.patch
 # Add AArch64 definitions
 Patch8: hdf-4.2.10-aarch64.patch
 # ppc64le support
@@ -65,7 +62,6 @@ HDF development headers and libraries.
 %patch4 -p1 -b .arm
 %patch5 -p1 -b .destdir
 %patch6 -p1 -b .examplesdir
-%patch7 -p1 -b .format
 %patch8 -p1 -b .aarch64
 %patch9 -p1 -b .ppc64le
 
@@ -138,6 +134,11 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Fri Feb 13 2015 Orion Poplawski <orion@cora.nwra.com> 4.2.11-1
+- Update to 4.2.11
+- Drop format patch applied upstream
+- Update destdir patch
+
 * Mon Sep 8 2014 Orion Poplawski <orion@cora.nwra.com> - 4.2.10-7
 - Updated patch for ppc64le support (bug #1134385)
 
