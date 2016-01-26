@@ -120,14 +120,12 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %files
-%defattr(-,root,root,0755)
 %doc COPYING MANIFEST README.txt release_notes/*.txt
 %exclude %{_defaultdocdir}/%{name}/examples
 %{_bindir}/*
 %{_mandir}/man1/*.gz
 
 %files devel
-%defattr(-,root,root,0755)
 %{_includedir}/%{name}/
 %{_libdir}/%{name}/
 %{_defaultdocdir}/%{name}/examples
