@@ -1,6 +1,6 @@
 Name: hdf
 Version: 4.2.11
-Release: 3%{?dist}
+Release: 4%{?dist}
 Summary: A general purpose library and file format for storing scientific data
 License: BSD
 Group: System Environment/Libraries
@@ -89,22 +89,21 @@ touch -c -r mfhdf/fortran/mffunc.inc mfhdf/fortran/mffunc.f90
 
 
 %install
-rm -rf $RPM_BUILD_ROOT
-make install DESTDIR=$RPM_BUILD_ROOT INSTALL='install -p'
+make install DESTDIR=%{buildroot} INSTALL='install -p'
+rm  %{buildroot}%{_libdir}/%{name}/*.la
 #Don't conflict with netcdf
-#rm $RPM_BUILD_ROOT%{_bindir}/nc* $RPM_BUILD_ROOT%{_mandir}/man1/nc*
 for file in ncdump ncgen; do
-  mv $RPM_BUILD_ROOT%{_bindir}/$file $RPM_BUILD_ROOT%{_bindir}/h$file
+  mv %{buildroot}%{_bindir}/$file %{buildroot}%{_bindir}/h$file
   # man pages are the same than netcdf ones
-  rm $RPM_BUILD_ROOT%{_mandir}/man1/${file}.1
+  rm %{buildroot}%{_mandir}/man1/${file}.1
 done
 
 # this is done to have the same timestamp on multiarch setups
-touch -c -r README.txt $RPM_BUILD_ROOT/%{_includedir}/hdf/h4config.h
+touch -c -r README.txt %{buildroot}/%{_includedir}/hdf/h4config.h
 
 # Remove an autoconf conditional from the API that is unused and cause
 # the API to be different on x86 and x86_64
-pushd $RPM_BUILD_ROOT/%{_includedir}/hdf
+pushd %{buildroot}/%{_includedir}/hdf
 grep -v 'H4_SIZEOF_INTP' h4config.h > h4config.h.tmp
 touch -c -r h4config.h h4config.h.tmp
 mv h4config.h.tmp h4config.h
@@ -115,12 +114,9 @@ popd
 make check
 
 
-%clean
-rm -rf $RPM_BUILD_ROOT
-
-
 %files
-%doc COPYING MANIFEST README.txt release_notes/*.txt
+%license COPYING
+%doc MANIFEST README.txt release_notes/*.txt
 %exclude %{_defaultdocdir}/%{name}/examples
 %{_bindir}/*
 %{_mandir}/man1/*.gz
@@ -132,6 +128,11 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed May 25 2016 Orion Poplawski <orion@cora.nwra.com> 4.2.11-4
+- Cleanup spec
+- Remove .la files
+- Use %%license
+
 * Wed Feb 03 2016 Fedora Release Engineering <releng@fedoraproject.org> - 4.2.11-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
 
