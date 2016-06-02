@@ -1,0 +1,20 @@
+diff -up hdf-4.2.11/hdf/test/tvattrf.f.fixname hdf-4.2.11/hdf/test/tvattrf.f
+--- hdf-4.2.11/hdf/test/tvattrf.f.fixname	2015-02-09 09:43:04.000000000 -0700
++++ hdf-4.2.11/hdf/test/tvattrf.f	2016-05-25 22:03:47.335099228 -0600
+@@ -52,7 +52,6 @@ C Output file: tvattrf.hdf
+       integer nattrs, itype, icount, imsize, vsver
+       integer fid1, vsid, vgid, vsref, vgref
+       integer ret, findex, vsbuf, aindex
+-      integer fixname
+ C
+ C iattri is for int32 values
+ C iattrs is for int16 values
+@@ -93,7 +92,7 @@ C iattrg, GATTR1 are for float64 values
+ C      number_failed = 0
+ C Open the file 
+       len_in = len(ifn_out)
+-      ret = fixname(ifn, ifn_out, len_in)
++      call fixname(ifn, ifn_out, len_in)
+       fid1 = hopen(ifn_out(1:len_in), DFACC_READ, 0)
+       call VRFY(fid1, 'hopen', number_failed)
+       ret = vfstart(fid1)

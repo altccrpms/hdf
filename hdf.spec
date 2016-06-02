@@ -1,11 +1,16 @@
-Name: hdf
-Version: 4.2.11
+%global shortname hdf
+%global ver 4.2.11
+%{?altcc_init:%altcc_init -n %{shortname} -v %{ver}}
+
+Name: hdf%{?altcc_pkg_suffix}
+Version: %{ver}
 Release: 4%{?dist}
 Summary: A general purpose library and file format for storing scientific data
 License: BSD
 Group: System Environment/Libraries
 URL: http://hdfgroup.org/products/hdf4/index.html
-Source0: ftp://ftp.hdfgroup.org/HDF/HDF_Current/src/%{name}-%{version}.tar.bz2
+Source0: ftp://ftp.hdfgroup.org/HDF/HDF_Current/src/%{shortname}-%{version}.tar.bz2
+Source1: %{shortname}.module.in
 Patch0: hdf-4.2.5-maxavailfiles.patch
 Patch1: hdf-ppc.patch
 Patch2: hdf-4.2.4-sparc.patch
@@ -15,13 +20,14 @@ Patch4: hdf-arm.patch
 Patch5: hdf-destdir.patch
 # Install examples into the right location
 Patch6: hdf-examplesdir.patch
+# Fix calling of fixname subroutine
+Patch7: hdf-fixname.patch
 # Add AArch64 definitions
 Patch8: hdf-4.2.10-aarch64.patch
 # ppc64le support
 # https://bugzilla.redhat.com/show_bug.cgi?id=1134385
 Patch9: hdf-ppc64le.patch
 
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 # For destdir/examplesdir patches
 BuildRequires: automake libtool
 BuildRequires: flex byacc libjpeg-devel zlib-devel
@@ -30,6 +36,9 @@ BuildRequires: gcc-gfortran
 %else
 BuildRequires: gcc-g77
 %endif
+
+%{?altcc_reqmodules}
+%{?altcc_provide}
 
 
 %description
@@ -48,13 +57,15 @@ Group: Development/Libraries
 Provides: %{name}-static = %{version}-%{release}
 Requires: %{name} = %{version}-%{release}
 Requires: libjpeg-devel zlib-devel
+%{?altcc:%altcc_provide devel}
+%{?altcc:%altcc_provide static}
 
 %description devel
 HDF development headers and libraries.
 
 
 %prep
-%setup -q
+%setup -q -n %{shortname}-%{version}
 %patch0 -p1 -b .maxavailfiles
 %patch1 -p1 -b .ppc
 %patch2 -p1 -b .sparc
@@ -62,6 +73,7 @@ HDF development headers and libraries.
 %patch4 -p1 -b .arm
 %patch5 -p1 -b .destdir
 %patch6 -p1 -b .examplesdir
+%patch7 -p1 -b .fixname
 %patch8 -p1 -b .aarch64
 %patch9 -p1 -b .ppc64le
 
@@ -76,9 +88,15 @@ autoreconf -vif
 # avoid upstream compiler flags settings
 rm config/*linux-gnu
 export CFLAGS="$RPM_OPT_FLAGS -fPIC"
-export FFLAGS="$RPM_OPT_FLAGS -fPIC -ffixed-line-length-none"
+if [ -n "$FFLAGS" ]
+then
+  export FFLAGS="$FFLAGS -fPIC -ffixed-line-length-none"
+else
+  export FFLAGS="$RPM_OPT_FLAGS -fPIC -ffixed-line-length-none"
+fi
+[ -n "$FC" ] && export F77=$FC
 %configure --disable-production --disable-netcdf \
- --includedir=%{_includedir}/%{name} --libdir=%{_libdir}/%{name}
+  %{!?altcc:--includedir=%{_includedir}/%{name} --libdir=%{_libdir}/%{name}}
 
 make
 # correct the timestamps based on files used to generate the header files
@@ -90,7 +108,7 @@ touch -c -r mfhdf/fortran/mffunc.inc mfhdf/fortran/mffunc.f90
 
 %install
 make install DESTDIR=%{buildroot} INSTALL='install -p'
-rm  %{buildroot}%{_libdir}/%{name}/*.la
+rm  %{buildroot}%{_libdir}%{!?altcc:/%{name}}/*.la
 #Don't conflict with netcdf
 for file in ncdump ncgen; do
   mv %{buildroot}%{_bindir}/$file %{buildroot}%{_bindir}/h$file
@@ -99,15 +117,17 @@ for file in ncdump ncgen; do
 done
 
 # this is done to have the same timestamp on multiarch setups
-touch -c -r README.txt %{buildroot}/%{_includedir}/hdf/h4config.h
+touch -c -r README.txt %{buildroot}/%{_includedir}/h4config.h
 
 # Remove an autoconf conditional from the API that is unused and cause
 # the API to be different on x86 and x86_64
-pushd %{buildroot}/%{_includedir}/hdf
+pushd %{buildroot}/%{_includedir}
 grep -v 'H4_SIZEOF_INTP' h4config.h > h4config.h.tmp
 touch -c -r h4config.h h4config.h.tmp
 mv h4config.h.tmp h4config.h
 popd
+
+%{?altcc:%altcc_writemodule %SOURCE1}
 
 
 %check
@@ -117,14 +137,16 @@ make check
 %files
 %license COPYING
 %doc MANIFEST README.txt release_notes/*.txt
-%exclude %{_defaultdocdir}/%{name}/examples
+%exclude %{_defaultdocdir}/%{shortname}/
+%{?altcc:%altcc_files -m %{_bindir} %{_datadir} %{_defaultdocdir} %{_mandir} %{_mandir}/man1}
 %{_bindir}/*
-%{_mandir}/man1/*.gz
+%{_mandir}/man1/*.1*
 
 %files devel
-%{_includedir}/%{name}/
-%{_libdir}/%{name}/
-%{_defaultdocdir}/%{name}/examples
+%{?altcc:%altcc_files %{_includedir} %{_libdir}}
+%{_includedir}
+%{_libdir}
+%{_defaultdocdir}/%{shortname}/
 
 
 %changelog

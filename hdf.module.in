@@ -1,0 +1,11 @@
+#%Module 1.0
+#
+#  hdf environemnt module
+#
+conflict	hdf
+prepend-path 	PATH 		@PREFIX@/bin
+prepend-path	MANPATH		@PREFIX@/share/man
+prepend-path 	LD_LIBRARY_PATH	@PREFIX@/@LIB@
+setenv		HDF_HOME	@PREFIX@
+setenv		HDF_INCLUDE	@PREFIX@/include
+setenv		HDF_LIB		@PREFIX@/@LIB@
