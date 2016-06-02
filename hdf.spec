@@ -90,7 +90,7 @@ rm config/*linux-gnu
 export CFLAGS="$RPM_OPT_FLAGS -fPIC"
 if [ -n "$FFLAGS" ]
 then
-  export FFLAGS="$FFLAGS -fPIC -ffixed-line-length-none"
+  export FFLAGS="$FFLAGS -fPIC"
 else
   export FFLAGS="$RPM_OPT_FLAGS -fPIC -ffixed-line-length-none"
 fi
