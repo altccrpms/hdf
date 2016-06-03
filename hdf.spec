@@ -128,6 +128,7 @@ mv h4config.h.tmp h4config.h
 popd
 
 %{?altcc:%altcc_writemodule %SOURCE1}
+%{?altcc:%altcc_license}
 
 
 %check
@@ -138,7 +139,7 @@ make check
 %license COPYING
 %doc MANIFEST README.txt release_notes/*.txt
 %exclude %{_defaultdocdir}/%{shortname}/
-%{?altcc:%altcc_files -m %{_bindir} %{_datadir} %{_defaultdocdir} %{_mandir} %{_mandir}/man1}
+%{?altcc:%altcc_files -dlm %{_bindir} %{_mandir}/man1}
 %{_bindir}/*
 %{_mandir}/man1/*.1*
 
