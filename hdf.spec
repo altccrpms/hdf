@@ -1,6 +1,6 @@
 Name: hdf
-Version: 4.2.11
-Release: 4%{?dist}
+Version: 4.2.12
+Release: 1%{?dist}
 Summary: A general purpose library and file format for storing scientific data
 License: BSD
 Group: System Environment/Libraries
@@ -128,6 +128,9 @@ make check
 
 
 %changelog
+* Tue Jan 31 2017 Orion Poplawski <orion@cora.nwra.com> 4.2.12-1
+- Update to 4.2.12
+
 * Wed May 25 2016 Orion Poplawski <orion@cora.nwra.com> 4.2.11-4
 - Cleanup spec
 - Remove .la files
