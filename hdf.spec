@@ -1,6 +1,6 @@
 Name: hdf
 Version: 4.2.12
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: A general purpose library and file format for storing scientific data
 License: BSD
 Group: System Environment/Libraries
@@ -128,6 +128,9 @@ make check
 
 
 %changelog
+* Fri Feb 10 2017 Fedora Release Engineering <releng@fedoraproject.org> - 4.2.12-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
+
 * Tue Jan 31 2017 Orion Poplawski <orion@cora.nwra.com> 4.2.12-1
 - Update to 4.2.12
 
