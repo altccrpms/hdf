@@ -1,6 +1,6 @@
 Name: hdf
-Version: 4.2.12
-Release: 2%{?dist}
+Version: 4.2.13
+Release: 1%{?dist}
 Summary: A general purpose library and file format for storing scientific data
 License: BSD
 Group: System Environment/Libraries
@@ -20,6 +20,10 @@ Patch8: hdf-4.2.10-aarch64.patch
 # ppc64le support
 # https://bugzilla.redhat.com/show_bug.cgi?id=1134385
 Patch9: hdf-ppc64le.patch
+
+# Fix syntax error on epel6 builds
+# Use only if java is disabled
+Patch10: hdf-avoid_syntax_error_el6.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 # For destdir/examplesdir patches
@@ -61,9 +65,15 @@ HDF development headers and libraries.
 %patch3 -p1 -b .s390
 %patch4 -p1 -b .arm
 %patch5 -p1 -b .destdir
-%patch6 -p1 -b .examplesdir
+%patch6 -p0 -b .examplesdir
 %patch8 -p1 -b .aarch64
 %patch9 -p1 -b .ppc64le
+
+## Fix syntax error bacause 'CLASSPATH_ENV=$H4_CLASSPATH' line on epel6 builds
+# Use only if java is disabled
+%if 0%{?rhel} < 7
+%patch10 -p0
+%endif
 
 chmod a-x *hdf/*/*.c hdf/*/*.h
 # restore include file timestamps modified by patching
@@ -77,7 +87,7 @@ autoreconf -vif
 rm config/*linux-gnu
 export CFLAGS="$RPM_OPT_FLAGS -fPIC"
 export FFLAGS="$RPM_OPT_FLAGS -fPIC -ffixed-line-length-none"
-%configure --disable-production --disable-netcdf \
+%configure --disable-production --disable-java --disable-netcdf \
  --includedir=%{_includedir}/%{name} --libdir=%{_libdir}/%{name}
 
 make
@@ -128,6 +138,9 @@ make check
 
 
 %changelog
+* Fri Jul 21 2017 Antonio Trande <sagitter@fedoraproject.org> 4.2.13-1
+- Update to 4.2.13
+
 * Fri Feb 10 2017 Fedora Release Engineering <releng@fedoraproject.org> - 4.2.12-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
 
