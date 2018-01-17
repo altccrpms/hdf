@@ -1,6 +1,6 @@
 Name: hdf
 Version: 4.2.13
-Release: 3%{?dist}
+Release: 4%{?dist}
 Summary: A general purpose library and file format for storing scientific data
 License: BSD
 Group: System Environment/Libraries
@@ -29,6 +29,7 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 # For destdir/examplesdir patches
 BuildRequires: automake libtool
 BuildRequires: flex byacc libjpeg-devel zlib-devel
+BuildRequires: libtirpc-devel
 %if "%{?dist}" != ".el4"
 BuildRequires: gcc-gfortran
 %else
@@ -85,7 +86,9 @@ touch -c -r ./hdf/src/hdfi.h.ppc ./hdf/src/hdfi.h
 autoreconf -vif
 # avoid upstream compiler flags settings
 rm config/*linux-gnu
-export CFLAGS="$RPM_OPT_FLAGS -fPIC"
+# TODO: upstream fix
+export CFLAGS="$RPM_OPT_FLAGS -fPIC -I/usr/include/tirpc"
+export LDFLAGS="%__global_ldflags -ltirpc"
 export FFLAGS="$RPM_OPT_FLAGS -fPIC -ffixed-line-length-none"
 %configure --disable-production --disable-java --disable-netcdf \
  --includedir=%{_includedir}/%{name} --libdir=%{_libdir}/%{name}
@@ -138,6 +141,10 @@ make check
 
 
 %changelog
+* Wed Jan 17 2018 Pavel Raiskup <praiskup@redhat.com> - 4.2.13-4
+- rpc api moved from glibc to libtirpc:
+  https://fedoraproject.org/wiki/Changes/SunRPCRemoval
+
 * Wed Aug 02 2017 Fedora Release Engineering <releng@fedoraproject.org> - 4.2.13-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Binutils_Mass_Rebuild
 
