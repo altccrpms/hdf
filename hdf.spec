@@ -4,7 +4,7 @@
 
 Name: hdf
 Version: 4.2.13
-Release: 5%{?dist}
+Release: 6%{?dist}
 Summary: A general purpose library and file format for storing scientific data
 License: BSD
 Group: System Environment/Libraries
@@ -148,6 +148,9 @@ make -j1 check
 %{_defaultdocdir}/%{name}/examples
 
 %changelog
+* Fri Feb 02 2018 Orion Poplawski <orion@cora.nwra.com> - 4.2.13-6
+- Rebuild for gcc 8.0
+
 * Sat Jan 20 2018 Antonio Trande <sagitter@fedoraproject.org> 4.2.13-5
 - Enable szlib support 
 
