@@ -4,7 +4,7 @@
 
 Name: hdf
 Version: 4.2.13
-Release: 6%{?dist}
+Release: 7%{?dist}
 Summary: A general purpose library and file format for storing scientific data
 License: BSD
 Group: System Environment/Libraries
@@ -49,7 +49,9 @@ Summary: HDF development files
 Group: Development/Libraries
 Provides: %{name}-static = %{version}-%{release}
 Requires: %{name}%{?_isa} = %{version}-%{release}
-Requires: libjpeg-devel zlib-devel
+Requires: libjpeg-devel
+Requires: libtirpc-devel
+Requires: zlib-devel
 
 %description devel
 HDF development headers and libraries.
@@ -148,6 +150,9 @@ make -j1 check
 %{_defaultdocdir}/%{name}/examples
 
 %changelog
+* Mon Feb 5 2018 Orion Poplawski <orion@nwra.com> - 4.2.13-7
+- Make hdf-devel require libtirpc-devel
+
 * Fri Feb 02 2018 Orion Poplawski <orion@cora.nwra.com> - 4.2.13-6
 - Rebuild for gcc 8.0
 
