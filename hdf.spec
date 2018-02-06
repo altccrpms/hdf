@@ -1,10 +1,10 @@
 %global shortname hdf
-%global ver 4.2.11
+%global ver 4.2.13
 %{?altcc_init:%altcc_init -n %{shortname} -v %{ver}}
 
 Name: hdf%{?altcc_pkg_suffix}
 Version: %{ver}
-Release: 4%{?dist}
+Release: 7%{?dist}
 Summary: A general purpose library and file format for storing scientific data
 License: BSD
 Group: System Environment/Libraries
@@ -27,15 +27,15 @@ Patch8: hdf-4.2.10-aarch64.patch
 # ppc64le support
 # https://bugzilla.redhat.com/show_bug.cgi?id=1134385
 Patch9: hdf-ppc64le.patch
+# Fix syntax error on epel6 builds
+# Use only if java is disabled
+Patch10: hdf-avoid_syntax_error_el6.patch
 
 # For destdir/examplesdir patches
 BuildRequires: automake libtool
-BuildRequires: flex byacc libjpeg-devel zlib-devel
-%if "%{?dist}" != ".el4"
+BuildRequires: flex byacc libjpeg-devel zlib-devel %{!?el6:libaec-devel}
+BuildRequires: libtirpc-devel
 BuildRequires: gcc-gfortran
-%else
-BuildRequires: gcc-g77
-%endif
 
 %{?altcc_reqmodules}
 %{?altcc_provide}
@@ -50,19 +50,19 @@ objects, one can create and store almost any kind of scientific data
 structure, such as images, arrays of vectors, and structured and unstructured 
 grids. You can also mix and match them in HDF files according to your needs.
 
-
 %package devel
 Summary: HDF development files
 Group: Development/Libraries
 Provides: %{name}-static = %{version}-%{release}
-Requires: %{name} = %{version}-%{release}
-Requires: libjpeg-devel zlib-devel
+Requires: %{name}%{?_isa} = %{version}-%{release}
+Requires: libjpeg-devel
+Requires: libtirpc-devel
+Requires: zlib-devel
 %{?altcc:%altcc_provide devel}
 %{?altcc:%altcc_provide static}
 
 %description devel
 HDF development headers and libraries.
-
 
 %prep
 %setup -q -n %{shortname}-%{version}
@@ -72,43 +72,54 @@ HDF development headers and libraries.
 %patch3 -p1 -b .s390
 %patch4 -p1 -b .arm
 %patch5 -p1 -b .destdir
-%patch6 -p1 -b .examplesdir
+%patch6 -p0 -b .examplesdir
 %patch7 -p1 -b .fixname
 %patch8 -p1 -b .aarch64
 %patch9 -p1 -b .ppc64le
 
+## Fix syntax error bacause 'CLASSPATH_ENV=$H4_CLASSPATH' line on epel6 builds
+# Use only if java is disabled
+%if 0%{?rhel} < 7
+%patch10 -p0
+%endif
+
 chmod a-x *hdf/*/*.c hdf/*/*.h
 # restore include file timestamps modified by patching
 touch -c -r ./hdf/src/hdfi.h.ppc ./hdf/src/hdfi.h
-
 
 %build
 # For destdir/examplesdir patches
 autoreconf -vif
 # avoid upstream compiler flags settings
 rm config/*linux-gnu
-export CFLAGS="$RPM_OPT_FLAGS -fPIC"
+# TODO: upstream fix
+# Shared libraries disabled: libmfhdf.so is not correctly compiled
+# for missing link to libdf.so
+export CFLAGS="%{optflags} -fPIC -I%{_includedir}/tirpc"
+export LDFLAGS="%{__global_ldflags} -ltirpc"
 if [ -n "$FFLAGS" ]
 then
   export FFLAGS="$FFLAGS -fPIC"
 else
-  export FFLAGS="$RPM_OPT_FLAGS -fPIC -ffixed-line-length-none"
+  export FFLAGS="{optflags} -fPIC -ffixed-line-length-none"
 fi
 [ -n "$FC" ] && export F77=$FC
-%configure --disable-production --disable-netcdf \
-  %{!?altcc:--includedir=%{_includedir}/%{name} --libdir=%{_libdir}/%{name}}
+%configure --disable-production --disable-java --disable-netcdf \
+ --enable-shared=no --enable-static=yes --enable-fortran %{!?el6:--with-szlib} \
+ %{!?altcc:--includedir=%{_includedir}/%{name} --libdir=%{_libdir}/%{name}}
+%make_build
 
-make
 # correct the timestamps based on files used to generate the header files
 touch -c -r hdf/src/hdf.inc hdf/src/hdf.f90
 touch -c -r hdf/src/dffunc.inc hdf/src/dffunc.f90
 touch -c -r mfhdf/fortran/mffunc.inc mfhdf/fortran/mffunc.f90
 # netcdf fortran include need same treatement, but they are not shipped
 
-
 %install
-make install DESTDIR=%{buildroot} INSTALL='install -p'
-rm  %{buildroot}%{_libdir}%{!?altcc:/%{name}}/*.la
+%make_install
+
+rm -f %{buildroot}%{_libdir}/%{name}/*.la
+
 #Don't conflict with netcdf
 for file in ncdump ncgen; do
   mv %{buildroot}%{_bindir}/$file %{buildroot}%{_bindir}/h$file
@@ -131,9 +142,19 @@ popd
 %{?altcc:%altcc_license}
 
 
+# ./testdhf fails on f28-i386 only with
+# --> /bin/sh: line 25: 22535 Segmentation fault      (core dumped) srcdir="." ./${tname} >> ${log} 2>&1
+#  but not by an arch-override=i386 ?!
+%if 0%{?fedora} >= 28
+%ifnarch %{ix86}
 %check
-make check
-
+make -j1 check
+%endif
+%endif
+%if 0%{?fedora} < 28
+%check
+make -j1 check
+%endif
 
 %files
 %license COPYING
@@ -149,8 +170,35 @@ make check
 %{_libdir}
 %{_defaultdocdir}/%{shortname}/
 
-
 %changelog
+* Mon Feb 5 2018 Orion Poplawski <orion@nwra.com> - 4.2.13-7
+- Make hdf-devel require libtirpc-devel
+
+* Fri Feb 02 2018 Orion Poplawski <orion@cora.nwra.com> - 4.2.13-6
+- Rebuild for gcc 8.0
+
+* Sat Jan 20 2018 Antonio Trande <sagitter@fedoraproject.org> 4.2.13-5
+- Enable szlib support 
+
+* Wed Jan 17 2018 Pavel Raiskup <praiskup@redhat.com> - 4.2.13-4
+- rpc api moved from glibc to libtirpc:
+  https://fedoraproject.org/wiki/Changes/SunRPCRemoval
+
+* Wed Aug 02 2017 Fedora Release Engineering <releng@fedoraproject.org> - 4.2.13-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Binutils_Mass_Rebuild
+
+* Wed Jul 26 2017 Fedora Release Engineering <releng@fedoraproject.org> - 4.2.13-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Mass_Rebuild
+
+* Fri Jul 21 2017 Antonio Trande <sagitter@fedoraproject.org> 4.2.13-1
+- Update to 4.2.13
+
+* Fri Feb 10 2017 Fedora Release Engineering <releng@fedoraproject.org> - 4.2.12-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
+
+* Tue Jan 31 2017 Orion Poplawski <orion@cora.nwra.com> 4.2.12-1
+- Update to 4.2.12
+
 * Wed May 25 2016 Orion Poplawski <orion@cora.nwra.com> 4.2.11-4
 - Cleanup spec
 - Remove .la files
