@@ -99,7 +99,7 @@ export CFLAGS="%{optflags} -fPIC -I%{_includedir}/tirpc"
 export LDFLAGS="%{__global_ldflags} -ltirpc"
 if [ -n "$FFLAGS" ]
 then
-  export FFLAGS="$FFLAGS -fPIC"
+  export FFLAGS=$(echo "$FFLAGS -fPIC" | sed 's/-warn all//')
 else
   export FFLAGS="{optflags} -fPIC -ffixed-line-length-none"
 fi
